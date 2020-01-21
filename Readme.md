@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Юля Амелина](https://up.htmlacademy.ru/javascript/19/user/966419).
-* Наставник: `Неизвестно`.
+* Наставник: [Константин Мамаев](https://github.com/MrMeison).
 
 ---
 
