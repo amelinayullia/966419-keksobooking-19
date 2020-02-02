@@ -1,5 +1,7 @@
 'use strict'
 
+var OFFERS_AMOUNT = 8;
+
 var houseTypes = [
   'palace',
   'flat',
@@ -85,7 +87,7 @@ var generateOffers = function(amount) {
   for (var i = 0; i < amount; i++) {
     resultArray.push({
       author: {
-        avatar: 'img/avatars/user0' + getRandomValue(1, 8) + '.png'
+        avatar: 'img/avatars/user0' + getRandomValue(1, OFFERS_AMOUNT) + '.png'
       },
       offer: {
         title: getRandomItemFrom(title),
@@ -109,8 +111,28 @@ var generateOffers = function(amount) {
 
   return resultArray;
 }
+//Создает массив из 8 сгенерированных JS объектов
+var offers = generateOffers(OFFERS_AMOUNT);
 
-var offers = generateOffers(8);
-
+//У блока .map удаляет класс .map--faded.
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
+
+
+//Добавляет метки (pins) на карте
+var pinsContainer = document.querySelector('.map__pins');
+var template = document.querySelector('#pin').content.querySelector('.map__pin');
+var fragment = document.createDocumentFragment();
+
+
+for (var i = 0; i < OFFERS_AMOUNT; i++) {
+
+  var pin = template.cloneNode(true);
+
+  pin.style = 'left:' + offers[i].location.x + 'px; top:' + offers[i].location.y + 'px;';
+  pin.querySelector('img').src = offers[i].author.avatar;
+  pin.querySelector('img').alt = offers[i].offer.title;
+  fragment.appendChild(pin);
+}
+
+pinsContainer.appendChild(fragment);
