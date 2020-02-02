@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var OFFERS_AMOUNT = 8;
 
@@ -10,12 +10,12 @@ var houseTypes = [
 ];
 
 var features = [
-'wifi',
-'dishwasher',
-'parking',
-'washer',
-'elevator',
-'conditioner'
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner'
 ];
 
 var title = [
@@ -61,27 +61,27 @@ var photos = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
-]
+];
 
-var getArrayOfRandomItemFrom = function(array, items) {
+var getArrayOfRandomItemFrom = function (array, items) {
   var newArray = [];
 
   for (var i = 0; i < items; i++) {
-    newArray.push(getRandomItemFrom(array))
+    newArray.push(getRandomItemFrom(array));
   }
 
   return newArray;
 };
 
-var getRandomValue = function(min, max) {
+var getRandomValue = function (min, max) {
   return Math.round(Math.random() * (max - min) + min);
 };
 
-var getRandomItemFrom = function(array) {
- return  array[Math.floor(Math.random() * array.length)]
-}
+var getRandomItemFrom = function (array) {
+  return array[Math.floor(Math.random() * array.length)];
+};
 
-var generateOffers = function(amount) {
+var generateOffers = function (amount) {
   var resultArray = [];
 
   for (var i = 0; i < amount; i++) {
@@ -94,8 +94,8 @@ var generateOffers = function(amount) {
         address: getRandomItemFrom(address),
         price: getRandomValue(2000, 8000),
         type: getRandomItemFrom(houseTypes),
-        rooms:  getRandomValue(1, 5),
-        guests:  getRandomValue(2, 10),
+        rooms: getRandomValue(1, 5),
+        guests: getRandomValue(2, 10),
         checkin: getRandomItemFrom(checkinCheckout),
         checkout: getRandomItemFrom(checkinCheckout),
         features: getArrayOfRandomItemFrom(features, getRandomValue(1, 5)),
@@ -107,19 +107,19 @@ var generateOffers = function(amount) {
         y: getRandomValue(130, 630)
       }
     });
-  };
+  }
 
   return resultArray;
-}
-//Создает массив из 8 сгенерированных JS объектов
+};
+// Создает массив из 8 сгенерированных JS объектов
 var offers = generateOffers(OFFERS_AMOUNT);
 
-//У блока .map удаляет класс .map--faded.
+// У блока .map удаляет класс .map--faded.
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
 
-//Добавляет метки (pins) на карте
+// Добавляет метки (pins) на карте
 var pinsContainer = document.querySelector('.map__pins');
 var template = document.querySelector('#pin').content.querySelector('.map__pin');
 var fragment = document.createDocumentFragment();
