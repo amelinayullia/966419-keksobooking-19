@@ -111,3 +111,6 @@ var generateOffers = function(amount) {
 }
 
 var offers = generateOffers(8);
+
+var map = document.querySelector('.map');
+map.classList.remove('map--faded');
