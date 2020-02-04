@@ -54,7 +54,7 @@ var photos = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
 
-var getArrayOfRandomItemFrom = function(array, items) {
+var getArrayOfRandomItemFrom = function (array, items) {
   var newArray = [];
 
   for (var i = 0; i < items; i++) {
@@ -64,15 +64,15 @@ var getArrayOfRandomItemFrom = function(array, items) {
   return newArray;
 };
 
-var getRandomValue = function(min, max) {
+var getRandomValue = function (min, max) {
   return Math.round(Math.random() * (max - min) + min);
 };
 
-var getRandomItemFrom = function(array) {
+var getRandomItemFrom = function (array) {
   return array[Math.floor(Math.random() * array.length)];
 };
 
-var generateOffer = function() {
+var generateOffer = function () {
   return {
     author: {
       avatar: 'img/avatars/user0' + getRandomValue(1, OFFERS_AMOUNT) + '.png'
@@ -97,7 +97,7 @@ var generateOffer = function() {
   };
 };
 
-var generateOffers = function(amount) {
+var generateOffers = function (amount) {
   var offers = [];
 
   for (var i = 0; i < amount; i++) {
@@ -120,7 +120,7 @@ var template = document
   .querySelector('#pin')
   .content.querySelector('.map__pin');
 
-var createPin = function(offer) {
+var createPin = function (offer) {
   var pin = template.cloneNode(true);
 
   pin.style =
@@ -131,7 +131,7 @@ var createPin = function(offer) {
   return pin;
 };
 
-var renderPins = function(offers) {
+var renderPins = function (offers) {
   var fragment = document.createDocumentFragment();
 
   for (var i = 0; i < offers.length; i++) {
