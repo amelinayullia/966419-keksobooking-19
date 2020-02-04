@@ -131,11 +131,11 @@ var createPin = function (offer) {
   return pin;
 };
 
-var renderPins = function (offers) {
+var renderPins = function (array) {
   var fragment = document.createDocumentFragment();
 
-  for (var i = 0; i < offers.length; i++) {
-    fragment.appendChild(createPin(offers[i]));
+  for (var i = 0; i < array.length; i++) {
+    fragment.appendChild(createPin(array[i]));
   }
 
   return fragment;
