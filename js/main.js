@@ -54,10 +54,10 @@ var photos = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
 
-var getArrayOfRandomItemFrom = function (array, items) {
+var getArrayOfRandomItemFrom = function (array, count) {
   var newArray = [];
 
-  for (var i = 0; i < items; i++) {
+  for (var i = 0; i < count; i++) {
     newArray.push(getRandomItemFrom(array));
   }
 
