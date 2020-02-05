@@ -107,19 +107,6 @@ var generateOffers = function (amount) {
   return offers;
 };
 
-// Создает массив из 8 сгенерированных JS объектов
-var offers = generateOffers(OFFERS_AMOUNT);
-
-// У блока .map удаляет класс .map--faded.
-var map = document.querySelector('.map');
-map.classList.remove('map--faded');
-
-// Добавляет метки (pins) на карте
-var pinsContainer = document.querySelector('.map__pins');
-var template = document
-  .querySelector('#pin')
-  .content.querySelector('.map__pin');
-
 var createPin = function (offer) {
   var pin = template.cloneNode(true);
 
@@ -140,5 +127,18 @@ var renderPins = function (array) {
 
   return fragment;
 };
+
+// Создает массив из 8 сгенерированных JS объектов
+var offers = generateOffers(OFFERS_AMOUNT);
+
+// У блока .map удаляет класс .map--faded.
+var map = document.querySelector('.map');
+map.classList.remove('map--faded');
+
+// Добавляет метки (pins) на карте
+var pinsContainer = document.querySelector('.map__pins');
+var template = document
+  .querySelector('#pin')
+  .content.querySelector('.map__pin');
 
 pinsContainer.appendChild(renderPins(offers));
