@@ -142,3 +142,25 @@ var template = document
   .content.querySelector('.map__pin');
 
 pinsContainer.appendChild(renderPins(offers));
+
+var templateCard = document
+  .querySelector('#card')
+  .content.querySelector('.popup');
+
+var createCard = function (offer) {
+  var card = templateCard.cloneNode(true);
+
+  card.querySelector('.popup__title').textContent = offer.offer.title;
+  card.querySelector('.popup__text--address').textContent = offer.offer.address;
+  card.querySelector('.popup__text--price').textContent = offer.offer.price + ' ₽/ночь';
+  card.querySelector('.popup__type').textContent = offer.offer.type;
+  card.querySelector('.popup__text--capacity').textContent = offer.offer.rooms + ' комнаты для ' + offer.offer.guests + ' гостей';
+  card.querySelector('.popup__text--time').textContent = 'заезд после ' + offer.offer.checkin + ',' + ' выезд до ' + offer.offer.checkin;
+  card.querySelector('.popup__features').textContent = offer.offer.features;
+  card.querySelector('.popup__description').textContent = offer.offer.description;
+  card.querySelector('.popup__avatar').src = offer.author.avatar;
+
+  return card;
+};
+
+map.appendChild(createCard(offers[0]));
