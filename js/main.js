@@ -54,6 +54,12 @@ var photos = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
 
+var removeChilds = function (parentElement) {
+  while (parentElement.firstChild) {
+    parentElement.removeChild(parentElement.firstChild);
+  }
+};
+
 var getArrayOfRandomItemFrom = function (array, count) {
   var newArray = [];
 
@@ -143,12 +149,36 @@ var template = document
 
 pinsContainer.appendChild(renderPins(offers));
 
+//Добавляет на карте popup
 var templateCard = document
   .querySelector('#card')
   .content.querySelector('.popup');
 
 var createCard = function (offer) {
   var card = templateCard.cloneNode(true);
+
+  var photosList = card.querySelector('.popup__photos');
+  removeChilds(photosList);
+
+  var fragmentPhotos = document.createDocumentFragment();
+
+var photoselement = function (images) {
+
+  for (var i = 0; i < images.length; i++) {
+    var photo = document.createElement('img');
+
+    photo.classList.add('popup__photo');
+    photo.src = images[i];
+    photo.alt = 'Фото ' + i;
+    photo.style = 'width: 45px; height: 40px;';
+
+    fragmentPhotos.appendChild(photo);
+  }
+};
+
+photoselement(offer.offer.photos);
+
+  photosList.appendChild(fragmentPhotos);
 
   card.querySelector('.popup__title').textContent = offer.offer.title;
   card.querySelector('.popup__text--address').textContent = offer.offer.address;
