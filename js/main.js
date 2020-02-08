@@ -156,7 +156,7 @@ var template = document
 
 pinsContainer.appendChild(renderPins(offers));
 
-//Добавляет на карте popup
+// Добавляет на карте popup
 var templateCard = document
   .querySelector('#card')
   .content.querySelector('.popup');
@@ -169,21 +169,21 @@ var createCard = function (offer) {
 
   var fragmentPhotos = document.createDocumentFragment();
 
-var photoselement = function (images) {
+  var photoselement = function (images) {
 
-  for (var i = 0; i < images.length; i++) {
-    var photo = document.createElement('img');
+    for (var i = 0; i < images.length; i++) {
+      var photo = document.createElement('img');
 
-    photo.classList.add('popup__photo');
-    photo.src = images[i];
-    photo.alt = 'Фото ' + i;
-    photo.style = 'width: 45px; height: 40px;';
+      photo.classList.add('popup__photo');
+      photo.src = images[i];
+      photo.alt = 'Фото ' + i;
+      photo.style = 'width: 45px; height: 40px;';
 
-    fragmentPhotos.appendChild(photo);
-  }
-};
+      fragmentPhotos.appendChild(photo);
+    }
+  };
 
-photoselement(offer.offer.photos);
+  photoselement(offer.offer.photos);
 
   photosList.appendChild(fragmentPhotos);
 
