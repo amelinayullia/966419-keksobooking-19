@@ -174,12 +174,12 @@ var photoselement = function (images) {
   for (var i = 0; i < images.length; i++) {
     var photo = document.createElement('img');
 
-      photo.classList.add('popup__photo');
-      photo.src = images[i];
-      photo.alt = 'Фото ' + i;
-      photo.style = 'width: 45px; height: 40px;';
+    photo.classList.add('popup__photo');
+    photo.src = images[i];
+    photo.alt = 'Фото ' + i;
+    photo.style = 'width: 45px; height: 40px;';
 
-      fragmentPhotos.appendChild(photo);
+    fragmentPhotos.appendChild(photo);
   }
 };
 
@@ -189,9 +189,9 @@ var offerFeatures = function (feature) {
   for (var i = 0; i < feature.length; i++) {
     var featureElement = document.createElement('li');
 
-      featureElement.classList.add('popup__feature', 'popup__feature--' + feature[i]);
-      fragmentFeature.appendChild(featureElement);
-    }
+    featureElement.classList.add('popup__feature', 'popup__feature--' + feature[i]);
+    fragmentFeature.appendChild(featureElement);
+  }
 
   return fragmentFeature;
 };
