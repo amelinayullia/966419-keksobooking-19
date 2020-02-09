@@ -71,7 +71,13 @@ var getArrayOfRandomItemFrom = function (array, count) {
   var newArray = [];
 
   for (var i = 0; i < count; i++) {
-    newArray.push(getRandomItemFrom(array));
+    var randomItem = getRandomItemFrom(array);
+
+    if (newArray.includes(randomItem)) {
+      continue;
+    } else {
+      newArray.push(randomItem);
+    }
   }
 
   return newArray;
