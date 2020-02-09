@@ -180,8 +180,21 @@ var photoselement = function (images) {
       photo.style = 'width: 45px; height: 40px;';
 
       fragmentPhotos.appendChild(photo);
+  }
+};
+
+var fragmentFeature = document.createDocumentFragment();
+
+var offerFeatures = function (feature) {
+  for (var i = 0; i < feature.length; i++) {
+    var featureElement = document.createElement('li');
+
+      featureElement.classList.add('popup__feature', 'popup__feature--' + feature[i]);
+      fragmentFeature.appendChild(featureElement);
     }
-  };
+
+  return fragmentFeature;
+};
 
 var createCard = function (offer) {
   var card = templateCard.cloneNode(true);
@@ -193,20 +206,7 @@ var createCard = function (offer) {
 
   photosList.appendChild(fragmentPhotos);
 
-  var fragmentFeature = document.createDocumentFragment();
   removeChilds(card.querySelector('.popup__features'));
-
-
-  var offerFeatures = function (feature) {
-    for (var i = 0; i < feature.length; i++) {
-      var featureElement = document.createElement('li');
-
-      featureElement.classList.add('popup__feature', 'popup__feature--' + feature[i]);
-      fragmentFeature.appendChild(featureElement);
-    }
-
-    return fragmentFeature;
-  };
 
   card.querySelector('.popup__title').textContent = offer.offer.title;
   card.querySelector('.popup__text--address').textContent = offer.offer.address;
