@@ -4,6 +4,13 @@ var OFFERS_AMOUNT = 8;
 
 var houseTypes = ['palace', 'flat', 'house', 'bungalo'];
 
+var localizedOfferType = {
+  'flat': 'Квартира',
+  'bungalo': 'Бунгало',
+  'house': 'Дом',
+  'palace': 'Дворец',
+};
+
 var features = [
   'wifi',
   'dishwasher',
@@ -54,11 +61,23 @@ var photos = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
 
+var removeChilds = function (parentElement) {
+  while (parentElement.firstChild) {
+    parentElement.removeChild(parentElement.firstChild);
+  }
+};
+
 var getArrayOfRandomItemFrom = function (array, count) {
   var newArray = [];
 
   for (var i = 0; i < count; i++) {
-    newArray.push(getRandomItemFrom(array));
+    var randomItem = getRandomItemFrom(array);
+
+    if (newArray.includes(randomItem)) {
+      continue;
+    } else {
+      newArray.push(randomItem);
+    }
   }
 
   return newArray;
@@ -142,3 +161,64 @@ var template = document
   .content.querySelector('.map__pin');
 
 pinsContainer.appendChild(renderPins(offers));
+
+// Добавляет на карте popup
+var templateCard = document
+  .querySelector('#card')
+  .content.querySelector('.popup');
+
+var fragmentPhotos = document.createDocumentFragment();
+
+var photoselement = function (images) {
+
+  for (var i = 0; i < images.length; i++) {
+    var photo = document.createElement('img');
+
+    photo.classList.add('popup__photo');
+    photo.src = images[i];
+    photo.alt = 'Фото ' + i;
+    photo.style = 'width: 45px; height: 40px;';
+
+    fragmentPhotos.appendChild(photo);
+  }
+};
+
+var fragmentFeature = document.createDocumentFragment();
+
+var offerFeatures = function (feature) {
+  for (var i = 0; i < feature.length; i++) {
+    var featureElement = document.createElement('li');
+
+    featureElement.classList.add('popup__feature', 'popup__feature--' + feature[i]);
+    fragmentFeature.appendChild(featureElement);
+  }
+
+  return fragmentFeature;
+};
+
+var createCard = function (offer) {
+  var card = templateCard.cloneNode(true);
+
+  var photosList = card.querySelector('.popup__photos');
+  removeChilds(photosList);
+
+  photoselement(offer.offer.photos);
+
+  photosList.appendChild(fragmentPhotos);
+
+  removeChilds(card.querySelector('.popup__features'));
+
+  card.querySelector('.popup__title').textContent = offer.offer.title;
+  card.querySelector('.popup__text--address').textContent = offer.offer.address;
+  card.querySelector('.popup__text--price').textContent = offer.offer.price + ' ₽/ночь';
+  card.querySelector('.popup__type').textContent = localizedOfferType[offer.offer.type];
+  card.querySelector('.popup__text--capacity').textContent = offer.offer.rooms + ' комнаты для ' + offer.offer.guests + ' гостей';
+  card.querySelector('.popup__text--time').textContent = 'заезд после ' + offer.offer.checkin + ',' + ' выезд до ' + offer.offer.checkin;
+  card.querySelector('.popup__features').appendChild(offerFeatures(offer.offer.features));
+  card.querySelector('.popup__description').textContent = offer.offer.description;
+  card.querySelector('.popup__avatar').src = offer.author.avatar;
+
+  return card;
+};
+
+map.appendChild(createCard(offers[0]));
