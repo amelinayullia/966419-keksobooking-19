@@ -150,75 +150,111 @@ var renderPins = function (array) {
 // Создает массив из 8 сгенерированных JS объектов
 var offers = generateOffers(OFFERS_AMOUNT);
 
-// У блока .map удаляет класс .map--faded.
-var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+// Добавляет на карте popup
+// var templateCard = document
+//   .querySelector('#card')
+//   .content.querySelector('.popup');
 
+// var fragmentPhotos = document.createDocumentFragment();
+
+// var photoselement = function (images) {
+
+//   for (var i = 0; i < images.length; i++) {
+//     var photo = document.createElement('img');
+
+//     photo.classList.add('popup__photo');
+//     photo.src = images[i];
+//     photo.alt = 'Фото ' + i;
+//     photo.style = 'width: 45px; height: 40px;';
+
+//     fragmentPhotos.appendChild(photo);
+//   }
+// };
+
+// var fragmentFeature = document.createDocumentFragment();
+
+// var offerFeatures = function (feature) {
+//   for (var i = 0; i < feature.length; i++) {
+//     var featureElement = document.createElement('li');
+
+//     featureElement.classList.add('popup__feature', 'popup__feature--' + feature[i]);
+//     fragmentFeature.appendChild(featureElement);
+//   }
+
+//   return fragmentFeature;
+// };
+
+// var createCard = function (offer) {
+//   var card = templateCard.cloneNode(true);
+
+//   var photosList = card.querySelector('.popup__photos');
+//   removeChilds(photosList);
+
+//   photoselement(offer.offer.photos);
+
+//   photosList.appendChild(fragmentPhotos);
+
+//   removeChilds(card.querySelector('.popup__features'));
+
+//   card.querySelector('.popup__title').textContent = offer.offer.title;
+//   card.querySelector('.popup__text--address').textContent = offer.offer.address;
+//   card.querySelector('.popup__text--price').textContent = offer.offer.price + ' ₽/ночь';
+//   card.querySelector('.popup__type').textContent = localizedOfferType[offer.offer.type];
+//   card.querySelector('.popup__text--capacity').textContent = offer.offer.rooms + ' комнаты для ' + offer.offer.guests + ' гостей';
+//   card.querySelector('.popup__text--time').textContent = 'заезд после ' + offer.offer.checkin + ',' + ' выезд до ' + offer.offer.checkin;
+//   card.querySelector('.popup__features').appendChild(offerFeatures(offer.offer.features));
+//   card.querySelector('.popup__description').textContent = offer.offer.description;
+//   card.querySelector('.popup__avatar').src = offer.author.avatar;
+
+//   return card;
+// };
+
+// map.appendChild(createCard(offers[0]));
+
+//Делает страницу при открытии неактивной, а принажатии на пин активной
+var button = document.querySelector('.map__pin--main');
+var map = document.querySelector('.map');
+var fieldset = document.querySelector('.map__features');
+var fieldsetSelect = document.querySelectorAll('.map__filter');
+var fieldsetFormPhoto = document.querySelectorAll('.ad-form-header');
+var fieldsetFormElement = document.querySelectorAll('.ad-form__element');
 // Добавляет метки (pins) на карте
 var pinsContainer = document.querySelector('.map__pins');
-var template = document
-  .querySelector('#pin')
-  .content.querySelector('.map__pin');
+var template = document.querySelector('#pin').content.querySelector('.map__pin');
 
-pinsContainer.appendChild(renderPins(offers));
+fieldset.disabled = true;
 
-// Добавляет на карте popup
-var templateCard = document
-  .querySelector('#card')
-  .content.querySelector('.popup');
+var fieldsetElement = function (elements, state) {
+  for (var i = 0; i < elements.length; i++)
+  elements[i].disabled = state;
+};
 
-var fragmentPhotos = document.createDocumentFragment();
+fieldsetElement(fieldsetSelect, true);
+fieldsetElement(fieldsetFormPhoto, true);
+fieldsetElement(fieldsetFormElement, true);
 
-var photoselement = function (images) {
+button.addEventListener('mousedown', function (evt) {
 
-  for (var i = 0; i < images.length; i++) {
-    var photo = document.createElement('img');
+  if (typeof evt === 'object') {
+    switch (evt.button) {
+      case 0:
+        map.classList.remove('map--faded');
+        fieldsetElement(fieldsetSelect, false);
+        fieldsetElement(fieldsetFormPhoto, false);
+        fieldsetElement(fieldsetFormElement, false);
+        // Добавляет метки (pins) на карте
+        pinsContainer.appendChild(renderPins(offers));
+        break;
+  }};
+});
 
-    photo.classList.add('popup__photo');
-    photo.src = images[i];
-    photo.alt = 'Фото ' + i;
-    photo.style = 'width: 45px; height: 40px;';
-
-    fragmentPhotos.appendChild(photo);
+button.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    map.classList.remove('map--faded');
+    fieldsetElement(fieldsetSelect, false);
+    fieldsetElement(fieldsetFormPhoto, false);
+    fieldsetElement(fieldsetFormElement, false);
+    // Добавляет метки (pins) на карте
+    pinsContainer.appendChild(renderPins(offers));
   }
-};
-
-var fragmentFeature = document.createDocumentFragment();
-
-var offerFeatures = function (feature) {
-  for (var i = 0; i < feature.length; i++) {
-    var featureElement = document.createElement('li');
-
-    featureElement.classList.add('popup__feature', 'popup__feature--' + feature[i]);
-    fragmentFeature.appendChild(featureElement);
-  }
-
-  return fragmentFeature;
-};
-
-var createCard = function (offer) {
-  var card = templateCard.cloneNode(true);
-
-  var photosList = card.querySelector('.popup__photos');
-  removeChilds(photosList);
-
-  photoselement(offer.offer.photos);
-
-  photosList.appendChild(fragmentPhotos);
-
-  removeChilds(card.querySelector('.popup__features'));
-
-  card.querySelector('.popup__title').textContent = offer.offer.title;
-  card.querySelector('.popup__text--address').textContent = offer.offer.address;
-  card.querySelector('.popup__text--price').textContent = offer.offer.price + ' ₽/ночь';
-  card.querySelector('.popup__type').textContent = localizedOfferType[offer.offer.type];
-  card.querySelector('.popup__text--capacity').textContent = offer.offer.rooms + ' комнаты для ' + offer.offer.guests + ' гостей';
-  card.querySelector('.popup__text--time').textContent = 'заезд после ' + offer.offer.checkin + ',' + ' выезд до ' + offer.offer.checkin;
-  card.querySelector('.popup__features').appendChild(offerFeatures(offer.offer.features));
-  card.querySelector('.popup__description').textContent = offer.offer.description;
-  card.querySelector('.popup__avatar').src = offer.author.avatar;
-
-  return card;
-};
-
-map.appendChild(createCard(offers[0]));
+});
