@@ -211,7 +211,7 @@ var offers = generateOffers(OFFERS_AMOUNT);
 
 // map.appendChild(createCard(offers[0]));
 
-//Делает страницу при открытии неактивной, а принажатии на пин активной
+// Делает страницу при открытии неактивной, а принажатии на пин активной
 var button = document.querySelector('.map__pin--main');
 var map = document.querySelector('.map');
 var fieldset = document.querySelector('.map__features');
@@ -226,12 +226,13 @@ var address = document.querySelector('#address');
 fieldset.disabled = true;
 
 var fieldsetElement = function (elements, state) {
-  for (var i = 0; i < elements.length; i++)
-  elements[i].disabled = state;
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].disabled = state;
 
-  var currentY = button.offsetTop ;
-  var currentX = button.offsetLeft ;
+  var currentY = button.offsetTop;
+  var currentX = button.offsetLeft;
   address.value = (currentX + ', ' + currentY);
+  }
 };
 
 fieldsetElement(fieldsetSelect, true);
@@ -239,8 +240,8 @@ fieldsetElement(fieldsetFormPhoto, true);
 fieldsetElement(fieldsetFormElement, true);
 
 button.addEventListener('mousedown', function (evt) {
-  var currentY = button.offsetTop ;
-  var currentX = button.offsetLeft ;
+  var currentY = button.offsetTop;
+  var currentX = button.offsetLeft;
 
   if (typeof evt === 'object') {
     switch (evt.button) {
@@ -253,7 +254,8 @@ button.addEventListener('mousedown', function (evt) {
         // Добавляет метки (pins) на карте
         pinsContainer.appendChild(renderPins(offers));
         break;
-  }};
+    }
+  }
 });
 
 button.addEventListener('keydown', function (evt) {
@@ -276,24 +278,24 @@ var formRoomsGuest = function (element1, element2) {
     100: [0]
   };
 
-  return function (evt) {
+  return function () {
     var value = +element1.value;
     var options = element2.options;
     var optionsLength = options.length;
     var availableOptions = сomplianceOptions[value];
 
     for (var i = 0; i < optionsLength; i++) {
-        if(availableOptions.indexOf(+options[i].value) !== -1){
-            options[i].disabled = false;
-          if(+options[i].value === value || availableOptions.length === 1){
+      if (availableOptions.indexOf(+options[i].value) !== -1) {
+        options[i].disabled = false;
+          if(+options[i].value === value || availableOptions.length === 1) {
             options[i].selected = true;
           }
-        } else {
+      } else {
           options[i].disabled = true;
         }
     }
-  };
-}
+  }
+};
 
 var rooms = document.querySelector('#room_number');
 var capacity = document.querySelector('#capacity');
