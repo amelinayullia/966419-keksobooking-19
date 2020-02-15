@@ -4,12 +4,12 @@ var OFFERS_AMOUNT = 8;
 
 var houseTypes = ['palace', 'flat', 'house', 'bungalo'];
 
-var localizedOfferType = {
-  'flat': 'Квартира',
-  'bungalo': 'Бунгало',
-  'house': 'Дом',
-  'palace': 'Дворец',
-};
+// var localizedOfferType = {
+//   'flat': 'Квартира',
+//   'bungalo': 'Бунгало',
+//   'house': 'Дом',
+//   'palace': 'Дворец',
+// };
 
 var features = [
   'wifi',
@@ -61,11 +61,11 @@ var photos = [
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
 
-var removeChilds = function (parentElement) {
-  while (parentElement.firstChild) {
-    parentElement.removeChild(parentElement.firstChild);
-  }
-};
+// var removeChilds = function (parentElement) {
+//   while (parentElement.firstChild) {
+//     parentElement.removeChild(parentElement.firstChild);
+//   }
+// };
 
 var getArrayOfRandomItemFrom = function (array, count) {
   var newArray = [];
@@ -221,7 +221,7 @@ var fieldsetFormElement = document.querySelectorAll('.ad-form__element');
 // Добавляет метки (pins) на карте
 var pinsContainer = document.querySelector('.map__pins');
 var template = document.querySelector('#pin').content.querySelector('.map__pin');
-var address = document.querySelector('#address');
+var formAddress = document.querySelector('#address');
 
 fieldset.disabled = true;
 
@@ -229,9 +229,9 @@ var fieldsetElement = function (elements, state) {
   for (var i = 0; i < elements.length; i++) {
     elements[i].disabled = state;
 
-  var currentY = button.offsetTop;
-  var currentX = button.offsetLeft;
-  address.value = (currentX + ', ' + currentY);
+    var currentY = button.offsetTop;
+    var currentX = button.offsetLeft;
+    formAddress.value = (currentX + ', ' + currentY);
   }
 };
 
@@ -250,7 +250,7 @@ button.addEventListener('mousedown', function (evt) {
         fieldsetElement(fieldsetSelect, false);
         fieldsetElement(fieldsetFormPhoto, false);
         fieldsetElement(fieldsetFormElement, false);
-        address.value = (currentX + ', ' + currentY);
+        formAddress.value = (currentX + ', ' + currentY);
         // Добавляет метки (pins) на карте
         pinsContainer.appendChild(renderPins(offers));
         break;
@@ -287,14 +287,14 @@ var formRoomsGuest = function (element1, element2) {
     for (var i = 0; i < optionsLength; i++) {
       if (availableOptions.indexOf(+options[i].value) !== -1) {
         options[i].disabled = false;
-          if(+options[i].value === value || availableOptions.length === 1) {
-            options[i].selected = true;
-          }
-      } else {
-          options[i].disabled = true;
+        if (+options[i].value === value || availableOptions.length === 1) {
+          options[i].selected = true;
         }
+      } else {
+        options[i].disabled = true;
+      }
     }
-  }
+  };
 };
 
 var rooms = document.querySelector('#room_number');
