@@ -221,12 +221,17 @@ var fieldsetFormElement = document.querySelectorAll('.ad-form__element');
 // Добавляет метки (pins) на карте
 var pinsContainer = document.querySelector('.map__pins');
 var template = document.querySelector('#pin').content.querySelector('.map__pin');
+var address = document.querySelector('#address');
 
 fieldset.disabled = true;
 
 var fieldsetElement = function (elements, state) {
   for (var i = 0; i < elements.length; i++)
   elements[i].disabled = state;
+
+  var currentY = button.offsetTop ;
+  var currentX = button.offsetLeft ;
+  address.value = (currentX + ', ' + currentY);
 };
 
 fieldsetElement(fieldsetSelect, true);
@@ -234,6 +239,8 @@ fieldsetElement(fieldsetFormPhoto, true);
 fieldsetElement(fieldsetFormElement, true);
 
 button.addEventListener('mousedown', function (evt) {
+  var currentY = button.offsetTop ;
+  var currentX = button.offsetLeft ;
 
   if (typeof evt === 'object') {
     switch (evt.button) {
@@ -242,6 +249,7 @@ button.addEventListener('mousedown', function (evt) {
         fieldsetElement(fieldsetSelect, false);
         fieldsetElement(fieldsetFormPhoto, false);
         fieldsetElement(fieldsetFormElement, false);
+        address.value = (currentX + ', ' + currentY);
         // Добавляет метки (pins) на карте
         pinsContainer.appendChild(renderPins(offers));
         break;
@@ -258,3 +266,36 @@ button.addEventListener('keydown', function (evt) {
     pinsContainer.appendChild(renderPins(offers));
   }
 });
+
+var formRoomsGuest = function (element1, element2) {
+
+  var сomplianceOptions = {
+    1: [1],
+    2: [1, 2],
+    3: [1, 2, 3],
+    100: [0]
+  };
+
+  return function (evt) {
+    var value = +element1.value;
+    var options = element2.options;
+    var optionsLength = options.length;
+    var availableOptions = сomplianceOptions[value];
+
+    for (var i = 0; i < optionsLength; i++) {
+        if(availableOptions.indexOf(+options[i].value) !== -1){
+            options[i].disabled = false;
+          if(+options[i].value === value || availableOptions.length === 1){
+            options[i].selected = true;
+          }
+        } else {
+          options[i].disabled = true;
+        }
+    }
+  };
+}
+
+var rooms = document.querySelector('#room_number');
+var capacity = document.querySelector('#capacity');
+
+rooms.addEventListener('change', formRoomsGuest(rooms, capacity));
