@@ -44,7 +44,7 @@ var ADDRESS = [
   '650, 450'
 ];
 
-var DESCRIPTION = [
+var DESCRIPTIONS = [
   'Отель находится в 5 минутах ходьбы от храма Сэнсо-дзи и ворот Каминаримон и в 3 минутах ходьбы от концертного зала квартала Асакуса и театра Асакуса-Энгей-Холл. До парка аттракционов «Ханаясики» гости дойдут за 7 минут, а до реки Сумиды — за 10 минут. От ближайшей железнодорожной станции можно без пересадок доехать до международных аэропортов Нарита и Ханэда. Поездка от станции метро Asakusa на линии Tobu Skytree до телевизионной башни «Токио Скайтри» займет 3 минуты, а от этой же станции на линии Ginza до района Сибуя — 35 минут.',
   'Отель расположен в Токио, в районе Таито, в 500 м от гробницы Хокусай Катсушика, в 600 м от храма Чэн-дзи и в 600 м от храма Чоджу-ин. К услугам гостей этого 2-звездочного хостела номера с кондиционером, общей ванной комнатой и бесплатным Wi-Fi. Хостел находится недалеко от популярных достопримечательностей, таких как храм Эйкен-дзи, храм Курамаэ-Дзиндзя и храм Кура.',
   'Отель расположен в Токио, в 5 км от храма Ханомори Хатиман и в 6 км от концертного зала Мин-Он. Отель расположен в 6 км от храма Тономине Наито, Мемориальной галереи Мэйдзи и художественного музея Сато. Улица Джингу Гаиен Гинкго находится в 7 км, а Мейдзи Дзингу Гайен — в 7 км.',
@@ -124,7 +124,7 @@ var generateOffer = function () {
       checkin: getRandomItemFrom(CHECKIN_CHECKOUT),
       checkout: getRandomItemFrom(CHECKIN_CHECKOUT),
       features: getArrayOfRandomItemFrom(FEATURES, getRandomValue(1, 5)),
-      description: getRandomItemFrom(DESCRIPTION),
+      description: getRandomItemFrom(DESCRIPTIONS),
       photos: getArrayOfRandomItemFrom(PHOTOS, getRandomValue(1, 5))
     },
     location: {
@@ -227,29 +227,26 @@ var createCard = function (offer) {
 map.appendChild(createCard(offers[0]));
 
 // Делает страницу при открытии неактивной, а принажатии на пин активной
-inputs.disabled = true;
-
-var fieldsetElement = function (elements, state) {
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].disabled = state;
+var disabledInput = function (state) {
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].disabled = state;
   }
 };
 
-fieldsetElement(inputs, true);
+disabledInput(true);
 
-button.addEventListener('mousedown', function () {
+var activatePage = function () {
   map.classList.remove('map--faded');
-  fieldsetElement(inputs, false);
+  disabledInput(false);
   // Добавляет метки (pins) на карте
   pinsContainer.appendChild(renderPins(offers));
-});
+};
+
+button.addEventListener('mousedown', activatePage);
 
 button.addEventListener('keydown', function (evt) {
   if (evt.key === 'Enter') {
-    map.classList.remove('map--faded');
-    fieldsetElement(inputs, false);
-    // Добавляет метки (pins) на карте
-    pinsContainer.appendChild(renderPins(offers));
+    activatePage();
   }
 });
 
