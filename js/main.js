@@ -2,16 +2,16 @@
 
 var OFFERS_AMOUNT = 8;
 
-var houseTypes = ['palace', 'flat', 'house', 'bungalo'];
+var HOUSE_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 
-var localizedOfferType = {
+var LOCALIZED_OFFER_TYPE = {
   'flat': 'Квартира',
   'bungalo': 'Бунгало',
   'house': 'Дом',
   'palace': 'Дворец',
 };
 
-var features = [
+var FEATURES = [
   'wifi',
   'dishwasher',
   'parking',
@@ -20,7 +20,7 @@ var features = [
   'conditioner'
 ];
 
-var title = [
+var TITLES = [
   'Solaria Nishitetsu Hotel Ginza',
   'Mitsui Garden Hotel Jingugaien Tokyo Premier',
   'Hotel Sunroute Plaza Shinjuku',
@@ -31,9 +31,9 @@ var title = [
   'Bed & Breakfast RENGA'
 ];
 
-var checkinCheckout = ['12', '13', '14'];
+var CHECKIN_CHECKOUT = ['12', '13', '14'];
 
-var address = [
+var ADDRESS = [
   '600, 350',
   '400, 200',
   '450, 250',
@@ -44,7 +44,7 @@ var address = [
   '650, 450'
 ];
 
-var description = [
+var DESCRIPTIONS = [
   'Отель находится в 5 минутах ходьбы от храма Сэнсо-дзи и ворот Каминаримон и в 3 минутах ходьбы от концертного зала квартала Асакуса и театра Асакуса-Энгей-Холл. До парка аттракционов «Ханаясики» гости дойдут за 7 минут, а до реки Сумиды — за 10 минут. От ближайшей железнодорожной станции можно без пересадок доехать до международных аэропортов Нарита и Ханэда. Поездка от станции метро Asakusa на линии Tobu Skytree до телевизионной башни «Токио Скайтри» займет 3 минуты, а от этой же станции на линии Ginza до района Сибуя — 35 минут.',
   'Отель расположен в Токио, в районе Таито, в 500 м от гробницы Хокусай Катсушика, в 600 м от храма Чэн-дзи и в 600 м от храма Чоджу-ин. К услугам гостей этого 2-звездочного хостела номера с кондиционером, общей ванной комнатой и бесплатным Wi-Fi. Хостел находится недалеко от популярных достопримечательностей, таких как храм Эйкен-дзи, храм Курамаэ-Дзиндзя и храм Кура.',
   'Отель расположен в Токио, в 5 км от храма Ханомори Хатиман и в 6 км от концертного зала Мин-Он. Отель расположен в 6 км от храма Тономине Наито, Мемориальной галереи Мэйдзи и художественного музея Сато. Улица Джингу Гаиен Гинкго находится в 7 км, а Мейдзи Дзингу Гайен — в 7 км.',
@@ -55,11 +55,29 @@ var description = [
   'Отель расположен в районе Синагава в Токио, в 2,2 км от сада Эбису и в 3,9 км от холмов Роппонги. Музей Нэдзу находится в 4,2 км от отеля, а статуя Хатико — в 4,4 км от отеля. Международный аэропорт Токио-Ханеда расположен в 9 км от отеля Mitsui Garden Hotel Gotanda.'
 ];
 
-var photos = [
+var PHOTOS = [
   'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
   'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
 ];
+
+var COMPLIANCE_OPTIONS = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0']
+};
+
+var button = document.querySelector('.map__pin--main');
+var inputs = document.querySelectorAll('.map__features, .map__filter, .ad-form__element, .ad-form-header');
+var pinsContainer = document.querySelector('.map__pins');
+var formAddress = document.querySelector('#address');
+var rooms = document.querySelector('#room_number');
+var capacity = document.querySelector('#capacity');
+var map = document.querySelector('.map');
+var templateCard = document.querySelector('#card').content.querySelector('.popup');
+var templatePins = document.querySelector('#pin').content.querySelector('.map__pin');
+
 
 var removeChilds = function (parentElement) {
   while (parentElement.firstChild) {
@@ -97,17 +115,17 @@ var generateOffer = function () {
       avatar: 'img/avatars/user0' + getRandomValue(1, OFFERS_AMOUNT) + '.png'
     },
     offer: {
-      title: getRandomItemFrom(title),
-      address: getRandomItemFrom(address),
+      title: getRandomItemFrom(TITLES),
+      address: getRandomItemFrom(ADDRESS),
       price: getRandomValue(2000, 8000),
-      type: getRandomItemFrom(houseTypes),
+      type: getRandomItemFrom(HOUSE_TYPES),
       rooms: getRandomValue(1, 5),
       guests: getRandomValue(2, 10),
-      checkin: getRandomItemFrom(checkinCheckout),
-      checkout: getRandomItemFrom(checkinCheckout),
-      features: getArrayOfRandomItemFrom(features, getRandomValue(1, 5)),
-      description: getRandomItemFrom(description),
-      photos: getArrayOfRandomItemFrom(photos, getRandomValue(1, 5))
+      checkin: getRandomItemFrom(CHECKIN_CHECKOUT),
+      checkout: getRandomItemFrom(CHECKIN_CHECKOUT),
+      features: getArrayOfRandomItemFrom(FEATURES, getRandomValue(1, 5)),
+      description: getRandomItemFrom(DESCRIPTIONS),
+      photos: getArrayOfRandomItemFrom(PHOTOS, getRandomValue(1, 5))
     },
     location: {
       x: getRandomValue(50, 1000),
@@ -126,8 +144,9 @@ var generateOffers = function (amount) {
   return offers;
 };
 
+// Добавляет метки (pins) на карте
 var createPin = function (offer) {
-  var pin = template.cloneNode(true);
+  var pin = templatePins.cloneNode(true);
 
   pin.style =
     'left:' + offer.location.x + 'px; top:' + offer.location.y + 'px;';
@@ -150,32 +169,16 @@ var renderPins = function (array) {
 // Создает массив из 8 сгенерированных JS объектов
 var offers = generateOffers(OFFERS_AMOUNT);
 
-// У блока .map удаляет класс .map--faded.
-var map = document.querySelector('.map');
-map.classList.remove('map--faded');
-
-// Добавляет метки (pins) на карте
-var pinsContainer = document.querySelector('.map__pins');
-var template = document
-  .querySelector('#pin')
-  .content.querySelector('.map__pin');
-
-pinsContainer.appendChild(renderPins(offers));
-
 // Добавляет на карте popup
-var templateCard = document
-  .querySelector('#card')
-  .content.querySelector('.popup');
-
 var fragmentPhotos = document.createDocumentFragment();
 
-var photoselement = function (images) {
+var getCardPhotosElement = function (photos) {
 
-  for (var i = 0; i < images.length; i++) {
+  for (var i = 0; i < photos.length; i++) {
     var photo = document.createElement('img');
 
     photo.classList.add('popup__photo');
-    photo.src = images[i];
+    photo.src = photos[i];
     photo.alt = 'Фото ' + i;
     photo.style = 'width: 45px; height: 40px;';
 
@@ -202,7 +205,7 @@ var createCard = function (offer) {
   var photosList = card.querySelector('.popup__photos');
   removeChilds(photosList);
 
-  photoselement(offer.offer.photos);
+  getCardPhotosElement(offer.offer.photos);
 
   photosList.appendChild(fragmentPhotos);
 
@@ -211,7 +214,7 @@ var createCard = function (offer) {
   card.querySelector('.popup__title').textContent = offer.offer.title;
   card.querySelector('.popup__text--address').textContent = offer.offer.address;
   card.querySelector('.popup__text--price').textContent = offer.offer.price + ' ₽/ночь';
-  card.querySelector('.popup__type').textContent = localizedOfferType[offer.offer.type];
+  card.querySelector('.popup__type').textContent = LOCALIZED_OFFER_TYPE[offer.offer.type];
   card.querySelector('.popup__text--capacity').textContent = offer.offer.rooms + ' комнаты для ' + offer.offer.guests + ' гостей';
   card.querySelector('.popup__text--time').textContent = 'заезд после ' + offer.offer.checkin + ',' + ' выезд до ' + offer.offer.checkin;
   card.querySelector('.popup__features').appendChild(offerFeatures(offer.offer.features));
@@ -222,3 +225,56 @@ var createCard = function (offer) {
 };
 
 map.appendChild(createCard(offers[0]));
+
+// Делает страницу при открытии неактивной, а принажатии на пин активной
+var disabledInput = function (state) {
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].disabled = state;
+  }
+};
+
+disabledInput(true);
+
+var activatePage = function () {
+  map.classList.remove('map--faded');
+  disabledInput(false);
+  // Добавляет метки (pins) на карте
+  pinsContainer.appendChild(renderPins(offers));
+};
+
+button.addEventListener('mousedown', activatePage);
+
+button.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    activatePage();
+  }
+});
+
+var formRoomsGuest = function (evt) {
+  var value = evt.target.value;
+  var options = capacity.options;
+  var optionsLength = options.length;
+  var availableOptions = COMPLIANCE_OPTIONS[value];
+
+  for (var i = 0; i < optionsLength; i++) {
+    if (availableOptions.indexOf(options[i].value) !== -1) {
+      options[i].disabled = false;
+      if (options[i].value === value || availableOptions.length === 1) {
+        options[i].selected = true;
+      }
+    } else {
+      options[i].disabled = true;
+    }
+  }
+};
+
+rooms.addEventListener('change', formRoomsGuest);
+
+var formAddressValue = function () {
+  var currentY = button.offsetTop;
+  var currentX = button.offsetLeft;
+
+  formAddress.value = (currentX + ', ' + currentY);
+};
+
+formAddressValue();
