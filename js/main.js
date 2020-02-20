@@ -153,6 +153,12 @@ var createPin = function (offer) {
   pin.querySelector('img').src = offer.author.avatar;
   pin.querySelector('img').alt = offer.offer.title;
 
+  var renderBidPicture = function () {
+    map.appendChild(createCard(offers[0]));
+  };
+
+  pin.addEventListener('click', renderBidPicture);
+
   return pin;
 };
 
@@ -224,7 +230,7 @@ var createCard = function (offer) {
   return card;
 };
 
-map.appendChild(createCard(offers[0]));
+// map.appendChild(createCard(offers[0]));
 
 // Делает страницу при открытии неактивной, а принажатии на пин активной
 var disabledInput = function (state) {
