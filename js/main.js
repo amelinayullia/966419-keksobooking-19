@@ -155,6 +155,27 @@ var createPin = function (offer) {
 
   var renderBidPicture = function () {
     map.appendChild(createCard(offers[0]));
+
+    pin.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Enter') {
+        renderBidPicture();
+      }
+    });
+
+    var buttonClosePopup = function () {
+      var removeCard = document.querySelector('.map__card');
+      map.removeChild(removeCard);
+    };
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Escape') {
+        buttonClosePopup();
+      }
+    });
+
+    var popupClose = document.querySelector('.popup__close');
+
+    popupClose.addEventListener('click', buttonClosePopup);
   };
 
   pin.addEventListener('click', renderBidPicture);
