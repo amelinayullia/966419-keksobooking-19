@@ -1,6 +1,8 @@
 'use strict';
 
 var OFFERS_AMOUNT = 8;
+var MIN_TITLE_LENGTH = 30;
+var MAX_TITLE_LENGTH = 100;
 
 var HOUSE_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 
@@ -305,3 +307,16 @@ var formAddressValue = function () {
 };
 
 formAddressValue();
+
+var lengthInputTitle = document.querySelector('#title');
+
+lengthInputTitle.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value.length < MIN_TITLE_LENGTH || target.value.length > MAX_TITLE_LENGTH) {
+    target.setCustomValidity(
+        'Заголовок объявления должен состоять минимум из ' + MIN_TITLE_LENGTH + ' и максимум из ' + MAX_TITLE_LENGTH + ' символов'
+    );
+  } else {
+    target.setCustomValidity('');
+  }
+});
