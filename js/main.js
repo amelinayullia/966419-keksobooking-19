@@ -70,15 +70,26 @@ var COMPLIANCE_OPTIONS = {
   '100': ['0']
 };
 
+var HOUSETYPES_PRICE = {
+  BUNGALO: 0,
+  FLAT: 1000,
+  HOUSE: 5000,
+  PALACE: 10000
+};
+
 var button = document.querySelector('.map__pin--main');
 var inputs = document.querySelectorAll('.map__features, .map__filter, .ad-form__element, .ad-form-header');
 var pinsContainer = document.querySelector('.map__pins');
 var formAddress = document.querySelector('#address');
+var formTimeIn = document.querySelector('#timein');
+var formTimeOut = document.querySelector('#timeout');
 var rooms = document.querySelector('#room_number');
 var capacity = document.querySelector('#capacity');
 var map = document.querySelector('.map');
 var templateCard = document.querySelector('#card').content.querySelector('.popup');
 var templatePins = document.querySelector('#pin').content.querySelector('.map__pin');
+var housePrice = document.querySelector('#price');
+var houseType = document.querySelector('#type');
 
 
 var removeChilds = function (parentElement) {
@@ -320,3 +331,14 @@ lengthInputTitle.addEventListener('input', function (evt) {
     target.setCustomValidity('');
   }
 });
+
+formTimeIn.addEventListener('change', function (evt) {
+  formTimeOut.value = evt.target.value;
+});
+
+var houseTypePrice = function () {
+  housePrice.min = HOUSETYPES_PRICE[houseType.value.toUpperCase()];
+  housePrice.placeholder = HOUSETYPES_PRICE[houseType.value.toUpperCase()];
+};
+
+houseType.addEventListener('change', houseTypePrice);
