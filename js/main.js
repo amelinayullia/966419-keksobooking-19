@@ -68,15 +68,26 @@ var COMPLIANCE_OPTIONS = {
   '100': ['0']
 };
 
+var HOUSETYPES_PRICE = {
+  BUNGALO: 0,
+  FLAT: 1000,
+  HOUSE: 5000,
+  PALACE: 10000
+};
+
 var button = document.querySelector('.map__pin--main');
 var inputs = document.querySelectorAll('.map__features, .map__filter, .ad-form__element, .ad-form-header');
 var pinsContainer = document.querySelector('.map__pins');
 var formAddress = document.querySelector('#address');
+var formTimeIn = document.querySelector('#timein');
+var formTimeOut = document.querySelector('#timeout');
 var rooms = document.querySelector('#room_number');
 var capacity = document.querySelector('#capacity');
 var map = document.querySelector('.map');
 var templateCard = document.querySelector('#card').content.querySelector('.popup');
 var templatePins = document.querySelector('#pin').content.querySelector('.map__pin');
+var housePrice = document.querySelector('#price');
+var houseType = document.querySelector('#type');
 
 
 var removeChilds = function (parentElement) {
@@ -144,6 +155,15 @@ var generateOffers = function (amount) {
   return offers;
 };
 
+
+var closePopUp = function () {
+  var popup = document.querySelector('.popup');
+
+  if (popup) {
+    popup.remove();
+  }
+};
+
 // Добавляет метки (pins) на карте
 var createPin = function (offer) {
   var pin = templatePins.cloneNode(true);
@@ -152,6 +172,26 @@ var createPin = function (offer) {
     'left:' + offer.location.x + 'px; top:' + offer.location.y + 'px;';
   pin.querySelector('img').src = offer.author.avatar;
   pin.querySelector('img').alt = offer.offer.title;
+
+  var renderBidPicture = function () {
+    map.appendChild(createCard(offer));
+
+    var buttonClosePopup = function () {
+      closePopUp();
+    };
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Escape') {
+        buttonClosePopup();
+      }
+    });
+
+    var popupClose = document.querySelector('.popup__close');
+
+    popupClose.addEventListener('click', buttonClosePopup);
+  };
+
+  pin.addEventListener('click', renderBidPicture);
 
   return pin;
 };
@@ -224,8 +264,6 @@ var createCard = function (offer) {
   return card;
 };
 
-map.appendChild(createCard(offers[0]));
-
 // Делает страницу при открытии неактивной, а принажатии на пин активной
 var disabledInput = function (state) {
   for (var i = 0; i < inputs.length; i++) {
@@ -278,3 +316,14 @@ var formAddressValue = function () {
 };
 
 formAddressValue();
+
+formTimeIn.addEventListener('change', function (evt) {
+  formTimeOut.value = evt.target.value;
+});
+
+var houseTypePrice = function () {
+  housePrice.min = HOUSETYPES_PRICE[houseType.value.toUpperCase()];
+  housePrice.placeholder = HOUSETYPES_PRICE[houseType.value.toUpperCase()];
+};
+
+houseType.addEventListener('change', houseTypePrice);
