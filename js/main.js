@@ -174,6 +174,8 @@ var createPin = function (offer) {
   pin.querySelector('img').alt = offer.offer.title;
 
   var renderBidPicture = function () {
+    closePopUp();
+
     map.appendChild(createCard(offer));
 
     var buttonClosePopup = function () {
