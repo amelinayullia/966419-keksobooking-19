@@ -1,8 +1,6 @@
 'use strict';
 
 var OFFERS_AMOUNT = 8;
-var MIN_TITLE_LENGTH = 30;
-var MAX_TITLE_LENGTH = 100;
 
 var HOUSE_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 
@@ -157,6 +155,15 @@ var generateOffers = function (amount) {
   return offers;
 };
 
+
+var closePopUp = function () {
+  var popup = document.querySelector('.popup');
+
+  if (popup) {
+    popup.remove();
+  }
+};
+
 // Добавляет метки (pins) на карте
 var createPin = function (offer) {
   var pin = templatePins.cloneNode(true);
@@ -167,11 +174,10 @@ var createPin = function (offer) {
   pin.querySelector('img').alt = offer.offer.title;
 
   var renderBidPicture = function () {
-    map.appendChild(createCard(offers[0]));
+    map.appendChild(createCard(offer));
 
     var buttonClosePopup = function () {
-      var removeCard = document.querySelector('.map__card');
-      map.removeChild(removeCard);
+      closePopUp();
     };
 
     document.addEventListener('keydown', function (evt) {
@@ -258,8 +264,6 @@ var createCard = function (offer) {
   return card;
 };
 
-// map.appendChild(createCard(offers[0]));
-
 // Делает страницу при открытии неактивной, а принажатии на пин активной
 var disabledInput = function (state) {
   for (var i = 0; i < inputs.length; i++) {
@@ -312,19 +316,6 @@ var formAddressValue = function () {
 };
 
 formAddressValue();
-
-var lengthInputTitle = document.querySelector('#title');
-
-lengthInputTitle.addEventListener('input', function (evt) {
-  var target = evt.target;
-  if (target.value.length < MIN_TITLE_LENGTH || target.value.length > MAX_TITLE_LENGTH) {
-    target.setCustomValidity(
-        'Заголовок объявления должен состоять минимум из ' + MIN_TITLE_LENGTH + ' и максимум из ' + MAX_TITLE_LENGTH + ' символов'
-    );
-  } else {
-    target.setCustomValidity('');
-  }
-});
 
 formTimeIn.addEventListener('change', function (evt) {
   formTimeOut.value = evt.target.value;
