@@ -65,4 +65,8 @@
   };
 
   houseType.addEventListener('change', houseTypePrice);
+
+  window.form = {
+    formAddressValue: formAddressValue
+  };
 })();
