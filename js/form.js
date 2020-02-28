@@ -11,9 +11,11 @@
   var formTimeOut = document.querySelector('#timeout');
   var housePrice = document.querySelector('#price');
   var houseType = document.querySelector('#type');
+  var form = document.querySelector('.ad-form');
 
   var activatePage = function () {
     map.classList.remove('map--faded');
+    form.classList.remove('ad-form--disabled');
     window.util.disabledInput(false);
     pinsContainer.appendChild(window.pins.renderPins(window.map.offers));
   };
@@ -65,4 +67,8 @@
   };
 
   houseType.addEventListener('change', houseTypePrice);
+
+  window.form = {
+    formAddressValue: formAddressValue
+  };
 })();
