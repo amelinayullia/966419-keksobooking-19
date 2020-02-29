@@ -3,6 +3,9 @@
 (function () {
   var OFFERS_AMOUNT = 8;
 
+  var URL = 'https://js.dump.academy/keksobooking/data';
+  var TIMEOUT_IN_MS = 10000;
+
   var MIN_MAIN_PIN_Y = 130;
   var MAX_MAIN_PIN_Y = 630;
   var MAIN_PIN_WIDTH = 65;
@@ -96,6 +99,8 @@
     MIN_MAIN_PIN_Y: MIN_MAIN_PIN_Y,
     MAX_MAIN_PIN_Y: MAX_MAIN_PIN_Y,
     MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
-    MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT
+    MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
+    URL: URL,
+    TIMEOUT_IN_MS: TIMEOUT_IN_MS
   };
 })();
