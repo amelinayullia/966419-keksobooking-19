@@ -27,9 +27,9 @@
     xhr.send();
   };
 
-  var onSuccess = function (array) {
-
+  var onLoad = function (array) {
     window.map.offers = array;
+    window.form.activatePage();
   };
 
   var onError = function (errorMessage) {
@@ -44,5 +44,8 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  window.load(onSuccess, onError);
+  window.load = {
+    onLoad: onLoad,
+    onError: onError
+  };
 })();
