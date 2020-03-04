@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  window.load = function (onSuccess, onError) {
+  var request = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -27,7 +27,7 @@
     xhr.send();
   };
 
-  var onLoad = function (array) {
+  var onSuccess = function (array) {
     window.map.offers = array;
     window.form.activatePage();
   };
@@ -44,8 +44,9 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  window.load = {
-    onLoad: onLoad,
-    onError: onError
-  };
+  window.backend = {
+    request: request,
+    onSuccess: onSuccess,
+    onError: onerror
+  }
 })();

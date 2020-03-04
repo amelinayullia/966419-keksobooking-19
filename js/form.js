@@ -21,8 +21,7 @@
   };
 
   button.addEventListener('mousedown', function () {
-    window.load.onLoad();
-    window.load.onError();
+    window.backend.request(window.backend.onSuccess, window.backend.onError);
   });
 
   button.addEventListener('keydown', function (evt) {
