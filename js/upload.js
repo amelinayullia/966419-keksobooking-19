@@ -9,7 +9,7 @@
   var errorDisplay = templateError.cloneNode(true);
   var successDisplay = templateSuccess.cloneNode(true);
 
-  window.upload = function (data, onSuccess) {
+  var sending = function (data, onSuccess) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -30,8 +30,11 @@
   };
 
   form.addEventListener('submit', function (evt) {
-    window.upload(new FormData(form), onSuccess, onError);
     evt.preventDefault();
+
+    sending(new FormData(form), onSuccess, onError);
+    window.util.disabledInput(true);
+    form.classList.add('ad-form__reset');
   });
 
   var closeModal = function () {
