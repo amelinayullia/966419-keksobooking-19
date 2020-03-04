@@ -45,10 +45,7 @@
     return pin;
   };
 
-  var offers = window.data.generateOffers(window.constants.OFFERS_AMOUNT);
-
   window.map = {
     createPin: createPin,
-    offers: offers
   };
 })();

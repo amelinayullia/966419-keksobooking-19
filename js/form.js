@@ -20,7 +20,9 @@
     pinsContainer.appendChild(window.pins.renderPins(window.map.offers));
   };
 
-  button.addEventListener('mousedown', activatePage);
+  button.addEventListener('mousedown', function () {
+    window.backend.request(window.backend.onSuccess, window.backend.onError);
+  });
 
   button.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
@@ -69,6 +71,7 @@
   houseType.addEventListener('change', houseTypePrice);
 
   window.form = {
-    formAddressValue: formAddressValue
+    formAddressValue: formAddressValue,
+    activatePage: activatePage
   };
 })();
