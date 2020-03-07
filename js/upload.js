@@ -5,6 +5,8 @@
   var templateError = document.querySelector('#error').content.querySelector('.error');
   var templateSuccess = document.querySelector('#success').content.querySelector('.success');
   var mainPage = document.querySelector('main');
+  var map = document.querySelector('.map');
+  var pinsContainer = document.querySelector('.map__pins');
 
   var errorDisplay = templateError.cloneNode(true);
   var successDisplay = templateSuccess.cloneNode(true);
@@ -23,6 +25,16 @@
 
   var onSuccess = function () {
     showModal();
+
+    form.reset();
+    map.classList.add('map--faded');
+    form.classList.add('ad-form--disabled');
+    window.util.disabledInput(true);
+
+    var pins = document.querySelectorAll('.map__pin');
+    for (var i = 1; i < pins.length; i++) {
+      pinsContainer.removeChild(pins[i]);
+    }
   };
 
   var onError = function (errorMessage) {
@@ -32,9 +44,12 @@
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    sending(new FormData(form), onSuccess, onError);
-    window.util.disabledInput(true);
-    form.classList.add('ad-form__reset');
+    sending(new FormData(form), function (response) {
+      return response;
+    });
+
+    onSuccess();
+    onError();
   });
 
   var closeModal = function () {
