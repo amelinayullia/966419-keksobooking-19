@@ -6,7 +6,6 @@
   var templateSuccess = document.querySelector('#success').content.querySelector('.success');
   var mainPage = document.querySelector('main');
   var map = document.querySelector('.map');
-  var pinsContainer = document.querySelector('.map__pins');
 
   var errorDisplay = templateError.cloneNode(true);
   var successDisplay = templateSuccess.cloneNode(true);
@@ -30,11 +29,7 @@
     map.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
     window.util.disabledInput(true);
-
-    var pins = document.querySelectorAll('.map__pin');
-    for (var i = 1; i < pins.length; i++) {
-      pinsContainer.removeChild(pins[i]);
-    }
+    window.pins.removePins();
   };
 
   var onError = function (errorMessage) {

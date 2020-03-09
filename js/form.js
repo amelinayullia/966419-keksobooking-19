@@ -3,7 +3,7 @@
 (function () {
   var map = document.querySelector('.map');
   var pinsContainer = document.querySelector('.map__pins');
-  var button = document.querySelector('.map__pin--main');
+  var mapPinMain = document.querySelector('.map__pin--main');
   var capacity = document.querySelector('#capacity');
   var rooms = document.querySelector('#room_number');
   var formAddress = document.querySelector('#address');
@@ -17,14 +17,14 @@
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
     window.util.disabledInput(false);
-    pinsContainer.appendChild(window.pins.renderPins(window.map.offers));
+    pinsContainer.appendChild(window.pins.renderPins(window.map.offers.slice(0, window.constants.PINS_NUMBER)));
   };
 
-  button.addEventListener('mousedown', function () {
-    window.backend.request(window.backend.onSuccess, window.backend.onError);
+  mapPinMain.addEventListener('mousedown', function () {
+    window.load.request(window.load.onSuccess, window.load.onError);
   });
 
-  button.addEventListener('keydown', function (evt) {
+  mapPinMain.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
       activatePage();
     }
@@ -51,8 +51,8 @@
   rooms.addEventListener('change', formRoomsGuest);
 
   var formAddressValue = function () {
-    var currentY = button.offsetTop;
-    var currentX = button.offsetLeft;
+    var currentY = mapPinMain.offsetTop;
+    var currentX = mapPinMain.offsetLeft;
 
     formAddress.value = (currentX + ', ' + currentY);
   };
