@@ -12,12 +12,22 @@
   var housePrice = document.querySelector('#price');
   var houseType = document.querySelector('#type');
   var form = document.querySelector('.ad-form');
+  var mapFilters = document.querySelector('.map__filters');
+
 
   var activatePage = function () {
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
     window.util.disabledInput(false);
     pinsContainer.appendChild(window.pins.renderPins(window.map.offers.slice(0, window.constants.PINS_NUMBER)));
+
+    mapFilters.addEventListener('change', function () {
+      window.map.closePopUp();
+      window.pins.removePins();
+
+      pinsContainer.appendChild(window.pins.renderPins(window.filter(window.map.offers.slice(0, window.constants.PINS_NUMBER))));
+
+    });
   };
 
   var resetPage = function () {
