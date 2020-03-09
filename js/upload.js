@@ -5,17 +5,20 @@
   var templateError = document.querySelector('#error').content.querySelector('.error');
   var templateSuccess = document.querySelector('#success').content.querySelector('.success');
   var mainPage = document.querySelector('main');
-  var map = document.querySelector('.map');
 
   var errorDisplay = templateError.cloneNode(true);
   var successDisplay = templateSuccess.cloneNode(true);
 
-  var sending = function (data, onSuccess) {
+  var sending = function (data, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
       onSuccess(xhr.response);
+    });
+
+    xhr.addEventListener('error', function () {
+      onError('Ошибка загрузки объявления');
     });
 
     xhr.open('POST', window.constants.URL_UPLOAD);
@@ -24,34 +27,32 @@
 
   var onSuccess = function () {
     showModal();
-
-    form.reset();
-    map.classList.add('map--faded');
-    form.classList.add('ad-form--disabled');
-    window.util.disabledInput(true);
-    window.pins.removePins();
+    window.form.resetPage();
   };
 
   var onError = function (errorMessage) {
     showModal(errorMessage);
+    window.form.resetPage();
   };
 
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    sending(new FormData(form), function (response) {
-      return response;
-    });
-
-    onSuccess();
-    onError();
+    sending(new FormData(form), onSuccess, onError);
   });
 
   var closeModal = function () {
     var modalSuccess = mainPage.querySelector('.success');
-    var modalError = mainPage.querySelector('.success');
-    modalSuccess.remove();
-    modalError.remove();
+    var modalError = mainPage.querySelector('.error');
+
+    if (modalSuccess) {
+      modalSuccess.remove();
+    }
+
+    if (modalError) {
+      modalError.remove();
+    }
+
     document.removeEventListener('keydown', onEscPress);
     document.removeEventListener('mousedown', onModalClick);
   };

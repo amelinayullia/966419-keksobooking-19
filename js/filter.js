@@ -16,6 +16,7 @@
 
   filterSelectElement.addEventListener('change', function (evt) {
     onFilterChange(evt.target.value);
+    window.map.closePopUp();
   });
 
   window.filter = {

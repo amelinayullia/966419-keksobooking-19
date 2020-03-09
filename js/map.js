@@ -47,5 +47,6 @@
 
   window.map = {
     createPin: createPin,
+    closePopUp: closePopUp
   };
 })();

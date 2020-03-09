@@ -20,6 +20,14 @@
     pinsContainer.appendChild(window.pins.renderPins(window.map.offers.slice(0, window.constants.PINS_NUMBER)));
   };
 
+  var resetPage = function () {
+    form.reset();
+    map.classList.add('map--faded');
+    form.classList.add('ad-form--disabled');
+    window.util.disabledInput(true);
+    window.pins.removePins();
+  };
+
   mapPinMain.addEventListener('mousedown', function () {
     window.load.request(window.load.onSuccess, window.load.onError);
   });
@@ -72,6 +80,7 @@
 
   window.form = {
     formAddressValue: formAddressValue,
-    activatePage: activatePage
+    activatePage: activatePage,
+    resetPage: resetPage
   };
 })();
