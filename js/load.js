@@ -5,7 +5,7 @@
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
-    xhr.open('GET', window.constants.URL);
+    xhr.open('GET', window.constants.URL_LOAD);
 
     xhr.addEventListener('load', function () {
       if (xhr.status === 200) {
@@ -23,7 +23,7 @@
 
     xhr.timeout = window.constants.TIMEOUT_IN_MS;
 
-    xhr.open('GET', window.constants.URL);
+    xhr.open('GET', window.constants.URL_LOAD);
     xhr.send();
   };
 
@@ -47,6 +47,6 @@
   window.backend = {
     request: request,
     onSuccess: onSuccess,
-    onError: onerror
-  }
+    onError: onError
+  };
 })();
