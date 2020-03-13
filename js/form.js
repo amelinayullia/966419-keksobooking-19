@@ -21,11 +21,21 @@
     window.util.disabledInput(false);
     pinsContainer.appendChild(window.pins.renderPins(window.map.offers.slice(0, window.constants.PINS_NUMBER)));
 
-    mapFilters.addEventListener('change', function () {
+    mapFilters.addEventListener('change', function (evt) {
       window.map.closePopUp();
       window.pins.removePins();
 
-      pinsContainer.appendChild(window.pins.renderPins(window.filter(window.map.offers).slice(0, window.constants.PINS_NUMBER)));
+      var filterName = evt.target.id;
+      var filterValue = evt.target.value;
+      if (evt.target.name === 'features') {
+        window.filter.changeFilter(filterValue, evt.target.checked);
+      } else {
+        window.filter.change(filterName, filterValue);
+      }
+
+      var pins = window.filter.apply(window.map.offers).slice(0, window.constants.PINS_NUMBER);
+
+      pinsContainer.appendChild(window.pins.renderPins(pins));
     });
   };
 

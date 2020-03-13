@@ -1,33 +1,34 @@
 'use strict';
 
 (function () {
-  var mapFilters = document.querySelector('.map__filters');
+  var filterState = {
+    'housing-type': 'any',
+    'housing-rooms': 'any',
+    'housing-guests': 'any',
+    'features': {}
+  };
 
-  var checkValue = function (elementValue, filterStateValue) {
+  var checkHouseType = function (elementValue, filterStateValue) {
     return filterStateValue === 'any' || filterStateValue === elementValue.toString();
   };
 
-  window.filter = function (offers) {
-    var filterState = {
-      features: []
-    };
-
-    var filtersSelect = function (evt) {
-      var filterName = evt.target.name;
-      var filterValue = evt.target.value;
-
-      switch (filterName) {
-        case 'housing-type':
-          filterState[filterName] = filterValue;
-          break;
-      }
-    };
-
-    mapFilters.addEventListener('change', filtersSelect);
-
-    var filterOffers = offers;
-    return filterOffers.filter(function (element) {
-      return checkValue(element.offer.type, filterState.type);
+  var apply = function (offers) {
+    return offers.filter(function (element) {
+      return checkHouseType(element.offer.type, filterState['housing-type']);
     });
+  };
+
+  var change = function (key, value) {
+    filterState[key] = value;
+  };
+
+  var changeFilter = function (key, value) {
+    filterState.features[key] = value;
+  };
+
+  window.filter = {
+    apply: apply,
+    change: change,
+    changeFilter: changeFilter
   };
 })();
