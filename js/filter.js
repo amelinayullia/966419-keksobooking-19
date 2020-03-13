@@ -1,23 +1,31 @@
 'use strict';
 
 (function () {
-  window.filter = function (offers) {
-    var filters = document.querySelector('.map__filters');
-    var filtersSelects = filters.querySelectorAll('select');
+  var mapFilters = document.querySelector('.map__filters');
 
+  var checkValue = function (elementValue, filterStateValue) {
+    return filterStateValue === 'any' || filterStateValue === elementValue.toString();
+  };
+
+  window.filter = function (offers) {
     var filterState = {
       features: []
     };
 
-    filtersSelects.forEach(function (element) {
-      filterState[element.name.split('-')[1]] = element.value;
-    });
+    var filtersSelect = function (evt) {
+      var filterName = evt.target.name;
+      var filterValue = evt.target.value;
 
-    var checkValue = function (elementValue, filterStateValue) {
-      return filterStateValue === 'any' || filterStateValue === elementValue.toString();
+      switch (filterName) {
+        case 'housing-type':
+          filterState[filterName] = filterValue;
+          break;
+      }
     };
 
-    var filterOffers = offers.slice();
+    mapFilters.addEventListener('change', filtersSelect);
+
+    var filterOffers = offers;
     return filterOffers.filter(function (element) {
       return checkValue(element.offer.type, filterState.type);
     });

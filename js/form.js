@@ -25,8 +25,7 @@
       window.map.closePopUp();
       window.pins.removePins();
 
-      pinsContainer.appendChild(window.pins.renderPins(window.filter(window.map.offers)));
-      window.filter(window.map.offers).slice(0, window.constants.PINS_NUMBER);
+      pinsContainer.appendChild(window.pins.renderPins(window.filter(window.map.offers).slice(0, window.constants.PINS_NUMBER)));
     });
   };
 
