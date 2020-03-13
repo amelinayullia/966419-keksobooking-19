@@ -3,7 +3,7 @@
 (function () {
   var map = document.querySelector('.map');
   var pinsContainer = document.querySelector('.map__pins');
-  var button = document.querySelector('.map__pin--main');
+  var mapPinMain = document.querySelector('.map__pin--main');
   var capacity = document.querySelector('#capacity');
   var rooms = document.querySelector('#room_number');
   var formAddress = document.querySelector('#address');
@@ -12,19 +12,46 @@
   var housePrice = document.querySelector('#price');
   var houseType = document.querySelector('#type');
   var form = document.querySelector('.ad-form');
+  var mapFilters = document.querySelector('.map__filters');
+
 
   var activatePage = function () {
     map.classList.remove('map--faded');
     form.classList.remove('ad-form--disabled');
     window.util.disabledInput(false);
-    pinsContainer.appendChild(window.pins.renderPins(window.map.offers));
+    pinsContainer.appendChild(window.pins.renderPins(window.map.offers.slice(0, window.constants.PINS_NUMBER)));
+
+    mapFilters.addEventListener('change', function (evt) {
+      window.map.closePopUp();
+      window.pins.removePins();
+
+      var filterName = evt.target.id;
+      var filterValue = evt.target.value;
+      if (evt.target.name === 'features') {
+        window.filter.changeFilter(filterValue, evt.target.checked);
+      } else {
+        window.filter.change(filterName, filterValue);
+      }
+
+      var pins = window.filter.apply(window.map.offers).slice(0, window.constants.PINS_NUMBER);
+
+      pinsContainer.appendChild(window.pins.renderPins(pins));
+    });
   };
 
-  button.addEventListener('mousedown', function () {
-    window.backend.request(window.backend.onSuccess, window.backend.onError);
+  var resetPage = function () {
+    form.reset();
+    map.classList.add('map--faded');
+    form.classList.add('ad-form--disabled');
+    window.util.disabledInput(true);
+    window.pins.removePins();
+  };
+
+  mapPinMain.addEventListener('mousedown', function () {
+    window.load.request(window.load.onSuccess, window.load.onError);
   });
 
-  button.addEventListener('keydown', function (evt) {
+  mapPinMain.addEventListener('keydown', function (evt) {
     if (evt.key === 'Enter') {
       activatePage();
     }
@@ -51,8 +78,8 @@
   rooms.addEventListener('change', formRoomsGuest);
 
   var formAddressValue = function () {
-    var currentY = button.offsetTop;
-    var currentX = button.offsetLeft;
+    var currentY = mapPinMain.offsetTop;
+    var currentX = mapPinMain.offsetLeft;
 
     formAddress.value = (currentX + ', ' + currentY);
   };
@@ -72,6 +99,7 @@
 
   window.form = {
     formAddressValue: formAddressValue,
-    activatePage: activatePage
+    activatePage: activatePage,
+    resetPage: resetPage
   };
 })();

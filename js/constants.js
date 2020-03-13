@@ -11,6 +11,7 @@
   var MAX_MAIN_PIN_Y = 630;
   var MAIN_PIN_WIDTH = 65;
   var MAIN_PIN_HEIGHT = 87;
+  var PINS_NUMBER = 5;
 
   var HOUSE_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 
@@ -103,6 +104,7 @@
     MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
     URL_LOAD: URL_LOAD,
     TIMEOUT_IN_MS: TIMEOUT_IN_MS,
-    URL_UPLOAD: URL_UPLOAD
+    URL_UPLOAD: URL_UPLOAD,
+    PINS_NUMBER: PINS_NUMBER
   };
 })();

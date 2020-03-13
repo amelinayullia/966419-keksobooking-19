@@ -1,8 +1,9 @@
 'use strict';
 
 (function () {
-  var button = document.querySelector('.map__pin--main');
+  var mapPinMain = document.querySelector('.map__pin--main');
   var map = document.querySelector('.map');
+  var pinsContainer = document.querySelector('.map__pins');
 
   var renderPins = function (array) {
     var fragment = document.createDocumentFragment();
@@ -15,7 +16,7 @@
   };
 
 
-  button.addEventListener('mousedown', function (evt) {
+  mapPinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
     var startCoords = {
@@ -36,15 +37,15 @@
         y: moveEvt.clientY
       };
 
-      var currentY = button.offsetTop - shift.y;
-      var currentX = button.offsetLeft - shift.x;
+      var currentY = mapPinMain.offsetTop - shift.y;
+      var currentX = mapPinMain.offsetLeft - shift.x;
 
       if ((currentY > window.constants.MIN_MAIN_PIN_Y - window.constants.MAIN_PIN_HEIGHT)
       && (currentY < window.constants.MAX_MAIN_PIN_Y - window.constants.MAIN_PIN_HEIGHT)) {
-        button.style.top = (button.offsetTop - shift.y) + 'px';
+        mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
       }
       if ((currentX > 0) && (currentX < (map.offsetWidth - window.constants.MAIN_PIN_WIDTH))) {
-        button.style.left = (button.offsetLeft - shift.x) + 'px';
+        mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
       }
 
       window.form.formAddressValue(currentX + window.constants.MAIN_PIN_WIDTH / 2, currentY + window.constants.MAIN_PIN_HEIGHT);
@@ -63,8 +64,8 @@
         y: upEvt.clientY
       };
 
-      var currentY = button.offsetTop - shift.y;
-      var currentX = button.offsetLeft - shift.x;
+      var currentY = mapPinMain.offsetTop - shift.y;
+      var currentX = mapPinMain.offsetLeft - shift.x;
 
       window.form.formAddressValue(currentX + window.constants.MAIN_PIN_WIDTH / 2, currentY + window.constants.MAIN_PIN_HEIGHT);
 
@@ -76,7 +77,15 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
+  var removePins = function () {
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    for (var i = 0; i < pins.length; i++) {
+      pinsContainer.removeChild(pins[i]);
+    }
+  };
+
   window.pins = {
-    renderPins: renderPins
+    renderPins: renderPins,
+    removePins: removePins
   };
 })();

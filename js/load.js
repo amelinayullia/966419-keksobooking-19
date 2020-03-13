@@ -44,7 +44,7 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  window.backend = {
+  window.load = {
     request: request,
     onSuccess: onSuccess,
     onError: onError
