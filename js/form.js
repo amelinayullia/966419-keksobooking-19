@@ -20,30 +20,30 @@
     form.classList.remove('ad-form--disabled');
     window.util.disabledInput(false);
     pinsContainer.appendChild(window.pins.renderPins(window.map.offers.slice(0, window.constants.PINS_NUMBER)));
-
-    var changeFilter = function (evt) {
-      return function () {
-        window.map.closePopUp();
-        window.pins.removePins();
-
-        var filterName = evt.target.id;
-        var filterValue = evt.target.value;
-        if (evt.target.name === 'features') {
-          window.filter.changeFeatures(filterValue, evt.target.checked);
-        } else {
-          window.filter.change(filterName, filterValue);
-        }
-
-        var pins = window.filter.apply(window.map.offers).slice(0, window.constants.PINS_NUMBER);
-
-        pinsContainer.appendChild(window.pins.renderPins(pins));
-      };
-    };
-
-    mapFilters.addEventListener('change', function (evt) {
-      window.debounce.changeFilterDebounce(changeFilter(evt));
-    });
   };
+
+  var changeFilter = function (evt) {
+    return function () {
+      window.map.closePopUp();
+      window.pins.removePins();
+
+      var filterName = evt.target.id;
+      var filterValue = evt.target.value;
+      if (evt.target.name === 'features') {
+        window.filter.changeFeatures(filterValue, evt.target.checked);
+      } else {
+        window.filter.change(filterName, filterValue);
+      }
+
+      var pins = window.filter.apply(window.map.offers).slice(0, window.constants.PINS_NUMBER);
+
+      pinsContainer.appendChild(window.pins.renderPins(pins));
+    };
+  };
+
+  mapFilters.addEventListener('change', function (evt) {
+    window.debounce(changeFilter(evt));
+  });
 
   var resetPage = function () {
     form.reset();
