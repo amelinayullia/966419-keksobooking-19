@@ -6,7 +6,7 @@
     'housing-rooms': 'any',
     'housing-guests': 'any',
     'housing-price': 'any',
-    'features': {}
+    'features': []
   };
 
   var getPriceValue = function (price) {
@@ -19,6 +19,12 @@
     return 'middle';
   };
 
+  var checkFeatures = function (elementValue, filterStateValue) {
+    return filterStateValue.every(function (feature) {
+      return elementValue.includes(feature);
+    });
+  };
+
   var checkPrice = function (elementValue, filterStateValue) {
     return filterStateValue === 'any' || filterStateValue === getPriceValue(elementValue);
   };
@@ -28,11 +34,18 @@
   };
 
   var apply = function (offers) {
+    var filtersCheckFeatures = document.querySelectorAll('#housing-features input[type="checkbox"]:checked');
+
+    filtersCheckFeatures.forEach(function (checkbox) {
+      filterState.features.push(checkbox.value);
+    });
+
     return offers.filter(function (element) {
       return checkValue(element.offer.type, filterState['housing-type']) &&
       checkValue(element.offer.guests, filterState['housing-guests']) &&
       checkValue(element.offer.rooms, filterState['housing-rooms']) &&
-      checkPrice(element.offer.price, filterState['housing-price']);
+      checkPrice(element.offer.price, filterState['housing-price']) &&
+      checkFeatures(element.offer.features, filterState['features']);
     });
   };
 
