@@ -47,10 +47,12 @@
 
   var resetPage = function () {
     form.reset();
+    mapFilters.reset();
     map.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
     window.util.disabledInput(true);
     window.pins.removePins();
+    formAddressValue();
   };
 
   mapPinMain.addEventListener('mousedown', function () {
