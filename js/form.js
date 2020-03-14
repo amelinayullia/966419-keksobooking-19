@@ -28,7 +28,7 @@
       var filterName = evt.target.id;
       var filterValue = evt.target.value;
       if (evt.target.name === 'features') {
-        window.filter.changeFilter(filterValue, evt.target.checked);
+        window.filter.changeFeatures(filterValue, evt.target.checked);
       } else {
         window.filter.change(filterName, filterValue);
       }

@@ -12,6 +12,9 @@
   var MAIN_PIN_WIDTH = 65;
   var MAIN_PIN_HEIGHT = 87;
   var PINS_NUMBER = 5;
+  var PRICE_MIN = 10000;
+  var PRICE_MAX = 50000;
+
 
   var HOUSE_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 
@@ -105,6 +108,8 @@
     URL_LOAD: URL_LOAD,
     TIMEOUT_IN_MS: TIMEOUT_IN_MS,
     URL_UPLOAD: URL_UPLOAD,
-    PINS_NUMBER: PINS_NUMBER
+    PINS_NUMBER: PINS_NUMBER,
+    PRICE_MIN: PRICE_MIN,
+    PRICE_MAX: PRICE_MAX
   };
 })();
