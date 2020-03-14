@@ -14,6 +14,7 @@
   var PINS_NUMBER = 5;
   var PRICE_MIN = 10000;
   var PRICE_MAX = 50000;
+  var DEBOUNCE_INTERVAL = 500; // ms
 
 
   var HOUSE_TYPES = ['palace', 'flat', 'house', 'bungalo'];
@@ -110,6 +111,7 @@
     URL_UPLOAD: URL_UPLOAD,
     PINS_NUMBER: PINS_NUMBER,
     PRICE_MIN: PRICE_MIN,
-    PRICE_MAX: PRICE_MAX
+    PRICE_MAX: PRICE_MAX,
+    DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL
   };
 })();
