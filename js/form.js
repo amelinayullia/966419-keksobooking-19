@@ -24,21 +24,21 @@
   };
 
   var changeFilter = function (evt) {
+    var filterName = evt.target.id;
+    var filterValue = evt.target.value;
+    if (evt.target.name === 'features') {
+      window.filter.changeFeatures(filterValue, evt.target.checked);
+    } else {
+      window.filter.change(filterName, filterValue);
+    }
+
     return function () {
       window.map.closePopUp();
       window.pins.removePins();
 
-      var filterName = evt.target.id;
-      var filterValue = evt.target.value;
-      if (evt.target.name === 'features') {
-        window.filter.changeFeatures(filterValue, evt.target.checked);
-      } else {
-        window.filter.change(filterName, filterValue);
-      }
-
       var pins = window.filter.apply(window.map.offers).slice(0, window.constants.PINS_NUMBER);
 
-      pinsContainer.appendChild(window.pins.renderPins(pins));
+      pinsContainer.appendChild(window.pins.renderPins(pins)).window.filter.reset();
     };
   };
 

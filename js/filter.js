@@ -9,6 +9,16 @@
     'features': []
   };
 
+  var reset = function () {
+    filterState = {
+      'housing-type': 'any',
+      'housing-rooms': 'any',
+      'housing-guests': 'any',
+      'housing-price': 'any',
+      'features': []
+    };
+  };
+
   var getPriceValue = function (price) {
     if (price > window.constants.PRICE_MAX) {
       return 'high';
@@ -58,6 +68,7 @@
   window.filter = {
     apply: apply,
     change: change,
-    changeFeatures: changeFeatures
+    changeFeatures: changeFeatures,
+    reset: reset
   };
 })();
