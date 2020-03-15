@@ -38,7 +38,7 @@
 
       var pins = window.filter.apply(window.map.offers).slice(0, window.constants.PINS_NUMBER);
 
-      pinsContainer.appendChild(window.pins.renderPins(pins)).window.filter.reset();
+      pinsContainer.appendChild(window.pins.renderPins(pins));
     };
   };
 
@@ -49,6 +49,7 @@
   var resetPage = function () {
     form.reset();
     mapFilters.reset();
+    window.filter.reset();
     map.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
     window.util.disabledInput(true);
