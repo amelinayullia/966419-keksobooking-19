@@ -13,6 +13,7 @@
   var houseType = document.querySelector('#type');
   var form = document.querySelector('.ad-form');
   var mapFilters = document.querySelector('.map__filters');
+  var formReset = document.querySelector('.ad-form__reset');
 
 
   var activatePage = function () {
@@ -104,6 +105,10 @@
   };
 
   houseType.addEventListener('change', houseTypePrice);
+
+  formReset.addEventListener('click', function () {
+    resetPage();
+  });
 
   window.form = {
     formAddressValue: formAddressValue,
