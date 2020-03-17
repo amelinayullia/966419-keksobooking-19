@@ -13,6 +13,7 @@
   var houseType = document.querySelector('#type');
   var form = document.querySelector('.ad-form');
   var mapFilters = document.querySelector('.map__filters');
+  var formReset = document.querySelector('.ad-form__reset');
 
 
   var activatePage = function () {
@@ -20,31 +21,40 @@
     form.classList.remove('ad-form--disabled');
     window.util.disabledInput(false);
     pinsContainer.appendChild(window.pins.renderPins(window.map.offers.slice(0, window.constants.PINS_NUMBER)));
+  };
 
-    mapFilters.addEventListener('change', function (evt) {
+  var changeFilter = function (evt) {
+    var filterName = evt.target.id;
+    var filterValue = evt.target.value;
+    if (evt.target.name === 'features') {
+      window.filter.changeFeatures(filterValue, evt.target.checked);
+    } else {
+      window.filter.change(filterName, filterValue);
+    }
+
+    return function () {
       window.map.closePopUp();
       window.pins.removePins();
-
-      var filterName = evt.target.id;
-      var filterValue = evt.target.value;
-      if (evt.target.name === 'features') {
-        window.filter.changeFilter(filterValue, evt.target.checked);
-      } else {
-        window.filter.change(filterName, filterValue);
-      }
 
       var pins = window.filter.apply(window.map.offers).slice(0, window.constants.PINS_NUMBER);
 
       pinsContainer.appendChild(window.pins.renderPins(pins));
-    });
+    };
   };
+
+  mapFilters.addEventListener('change', function (evt) {
+    window.debounce(changeFilter(evt));
+  });
 
   var resetPage = function () {
     form.reset();
+    mapFilters.reset();
+    window.filter.reset();
     map.classList.add('map--faded');
     form.classList.add('ad-form--disabled');
     window.util.disabledInput(true);
     window.pins.removePins();
+    formAddressValue();
   };
 
   mapPinMain.addEventListener('mousedown', function () {
@@ -96,6 +106,10 @@
   };
 
   houseType.addEventListener('change', houseTypePrice);
+
+  formReset.addEventListener('click', function () {
+    resetPage();
+  });
 
   window.form = {
     formAddressValue: formAddressValue,
