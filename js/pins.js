@@ -15,6 +15,20 @@
     return fragment;
   };
 
+  var getMainPinCoords = function () {
+    return {
+      x: +mapPinMain.style.left.split('px')[0],
+      y: +mapPinMain.style.top.split('px')[0]
+    };
+  };
+
+  var initialPinCoord = getMainPinCoords();
+
+  var resetMainPin = function () {
+    mapPinMain.style.top = initialPinCoord.y + 'px';
+    mapPinMain.style.left = initialPinCoord.x + 'px';
+  };
+
 
   mapPinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -48,7 +62,7 @@
         mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
       }
 
-      window.form.formAddressValue(currentX + window.constants.MAIN_PIN_WIDTH / 2, currentY + window.constants.MAIN_PIN_HEIGHT);
+      window.form.setFormAddressValue(currentX + window.constants.MAIN_PIN_WIDTH / 2, currentY + window.constants.MAIN_PIN_HEIGHT);
     };
 
     var onMouseUp = function (upEvt) {
@@ -67,7 +81,7 @@
       var currentY = mapPinMain.offsetTop - shift.y;
       var currentX = mapPinMain.offsetLeft - shift.x;
 
-      window.form.formAddressValue(currentX + window.constants.MAIN_PIN_WIDTH / 2, currentY + window.constants.MAIN_PIN_HEIGHT);
+      window.form.setFormAddressValue(currentX + window.constants.MAIN_PIN_WIDTH / 2, currentY + window.constants.MAIN_PIN_HEIGHT);
 
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
@@ -86,6 +100,7 @@
 
   window.pins = {
     renderPins: renderPins,
-    removePins: removePins
+    removePins: removePins,
+    resetMainPin: resetMainPin
   };
 })();

@@ -2,9 +2,9 @@
 
 (function () {
   var templateCard = document.querySelector('#card').content.querySelector('.popup');
-  var fragmentPhotos = document.createDocumentFragment();
 
   var getCardPhotosElement = function (photos) {
+    var fragmentPhotos = document.createDocumentFragment();
 
     for (var i = 0; i < photos.length; i++) {
       var photo = document.createElement('img');
@@ -16,11 +16,13 @@
 
       fragmentPhotos.appendChild(photo);
     }
+    return fragmentPhotos;
   };
 
-  var fragmentFeature = document.createDocumentFragment();
 
-  var offerFeatures = function (feature) {
+  var getOfferFeaturesElement = function (feature) {
+    var fragmentFeature = document.createDocumentFragment();
+
     for (var i = 0; i < feature.length; i++) {
       var featureElement = document.createElement('li');
 
@@ -33,15 +35,13 @@
 
   var createCard = function (offer) {
     var card = templateCard.cloneNode(true);
+    var fragmentPhotos = getCardPhotosElement(offer.offer.photos);
 
     var photosList = card.querySelector('.popup__photos');
     window.util.removeChilds(photosList);
-
-    getCardPhotosElement(offer.offer.photos);
+    window.util.removeChilds(card.querySelector('.popup__features'));
 
     photosList.appendChild(fragmentPhotos);
-
-    window.util.removeChilds(card.querySelector('.popup__features'));
 
     card.querySelector('.popup__title').textContent = offer.offer.title;
     card.querySelector('.popup__text--address').textContent = offer.offer.address;
@@ -49,7 +49,7 @@
     card.querySelector('.popup__type').textContent = window.constants.LOCALIZED_OFFER_TYPE[offer.offer.type];
     card.querySelector('.popup__text--capacity').textContent = offer.offer.rooms + ' комнаты для ' + offer.offer.guests + ' гостей';
     card.querySelector('.popup__text--time').textContent = 'заезд после ' + offer.offer.checkin + ',' + ' выезд до ' + offer.offer.checkin;
-    card.querySelector('.popup__features').appendChild(offerFeatures(offer.offer.features));
+    card.querySelector('.popup__features').appendChild(getOfferFeaturesElement(offer.offer.features));
     card.querySelector('.popup__description').textContent = offer.offer.description;
     card.querySelector('.popup__avatar').src = offer.author.avatar;
 
