@@ -52,6 +52,7 @@
     window.util.disabledInput(true);
     window.pins.resetMainPin();
     setFormAddressValue();
+    window.avatar.onRemoveFileChooser();
   };
 
   var onRoomNumber = function (evt) {
