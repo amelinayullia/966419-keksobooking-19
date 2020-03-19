@@ -56,11 +56,12 @@
   });
 
   var onRemoveFileChooser = function () {
+    var previewHouseNode = document.querySelector('.ad-form__photo img');
     previewAvatar.src = previewAvatarSrc;
 
-    var previewHouseNode = document.querySelector('.ad-form__photo img');
-
-    previewHouse.removeChild(previewHouseNode);
+    if (previewHouseNode) {
+      previewHouse.removeChild(previewHouseNode);
+    }
   };
 
   window.avatar = {
