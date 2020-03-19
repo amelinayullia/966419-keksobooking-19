@@ -53,6 +53,7 @@
     window.pins.resetMainPin();
     setFormAddressValue();
     window.avatar.onRemoveFileChooser();
+    window.map.closePopUp();
   };
 
   var onRoomNumber = function (evt) {
