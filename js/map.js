@@ -4,12 +4,35 @@
   var templatePins = document.querySelector('#pin').content.querySelector('.map__pin');
   var map = document.querySelector('.map');
 
+  var onEscKeydown = function (evt) {
+    if (evt.key === 'Escape') {
+      buttonClosePopup();
+    }
+  };
+
+  var buttonClosePopup = function () {
+    closePopUp();
+  };
+
   var closePopUp = function () {
     var popup = document.querySelector('.popup');
 
     if (popup) {
       popup.remove();
+      document.removeEventListener('keydown', onEscKeydown);
     }
+  };
+
+  var renderBidPicture = function (offer) {
+    closePopUp();
+
+    map.appendChild(window.card.createCard(offer));
+
+    document.addEventListener('keydown', onEscKeydown);
+
+    var popupClose = document.querySelector('.popup__close');
+
+    popupClose.addEventListener('click', buttonClosePopup);
   };
 
   var createPin = function (offer) {
@@ -20,27 +43,11 @@
     pin.querySelector('img').src = offer.author.avatar;
     pin.querySelector('img').alt = offer.offer.title;
 
-    var renderBidPicture = function () {
-      closePopUp();
-
-      map.appendChild(window.card.createCard(offer));
-
-      var buttonClosePopup = function () {
-        closePopUp();
-      };
-
-      document.addEventListener('keydown', function (evt) {
-        if (evt.key === 'Escape') {
-          buttonClosePopup();
-        }
-      });
-
-      var popupClose = document.querySelector('.popup__close');
-
-      popupClose.addEventListener('click', buttonClosePopup);
+    var onClick = function () {
+      renderBidPicture(offer);
     };
 
-    pin.addEventListener('click', renderBidPicture);
+    pin.addEventListener('click', onClick);
 
     return pin;
   };
