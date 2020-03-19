@@ -17,8 +17,8 @@
 
   var getMainPinCoords = function () {
     return {
-      x: +mapPinMain.style.left.split('px')[0],
-      y: +mapPinMain.style.top.split('px')[0]
+      x: parseInt(mapPinMain.style.left, 10),
+      y: parseInt(mapPinMain.style.top, 10)
     };
   };
 

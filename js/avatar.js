@@ -8,10 +8,6 @@
   var previewHouse = document.querySelector('.ad-form__photo');
   var previewAvatarSrc = previewAvatar.src;
 
-
-  var PHOTO_WIDTH = 70;
-  var PHOTO_HEIGHT = 70;
-
   var fileChooser = function () {
     var file = fileChooserAvatar.files[0];
     var fileName = file.name.toLowerCase();
@@ -35,8 +31,8 @@
   fileChooserHouse.addEventListener('change', function () {
     if (fileChooserHouse.files) {
       var img = document.createElement('img');
-      img.width = PHOTO_WIDTH;
-      img.height = PHOTO_HEIGHT;
+      img.width = window.constants.PHOTO_WIDTH;
+      img.height = window.constants.PHOTO_HEIGHT;
       img.classList.add('add-form__img');
       previewHouse.appendChild(img);
     }
