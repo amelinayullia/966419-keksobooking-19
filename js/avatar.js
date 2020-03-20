@@ -29,6 +29,8 @@
   fileChooserAvatar.addEventListener('change', fileChooser);
 
   fileChooserHouse.addEventListener('change', function () {
+    window.util.removeChilds(previewHouse);
+
     if (fileChooserHouse.files) {
       var img = document.createElement('img');
       img.width = window.constants.PHOTO_WIDTH;
@@ -56,12 +58,9 @@
   });
 
   var onRemoveFileChooser = function () {
-    var previewHouseNode = document.querySelector('.ad-form__photo img');
-    previewAvatar.src = previewAvatarSrc;
+    window.util.removeChilds(previewHouse);
 
-    if (previewHouseNode) {
-      previewHouse.removeChild(previewHouseNode);
-    }
+    previewAvatar.src = previewAvatarSrc;
   };
 
   window.avatar = {

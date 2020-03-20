@@ -125,6 +125,10 @@
     formTimeOut.value = evt.target.value;
   });
 
+  formTimeOut.addEventListener('change', function (evt) {
+    formTimeIn.value = evt.target.value;
+  });
+
   houseType.addEventListener('change', onHouseTypePrice);
 
   formReset.addEventListener('click', function () {
