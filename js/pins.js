@@ -58,7 +58,7 @@
       && (currentY < window.constants.MAX_MAIN_PIN_Y - window.constants.MAIN_PIN_HEIGHT)) {
         mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
       }
-      if ((currentX > 0) && (currentX < (map.offsetWidth - window.constants.MAIN_PIN_WIDTH))) {
+      if ((currentX > 0 - (window.constants.MAIN_PIN_WIDTH / 2)) && (currentX < map.offsetWidth - (window.constants.MAIN_PIN_WIDTH / 2))) {
         mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
       }
 

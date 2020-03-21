@@ -54,29 +54,42 @@
     setFormAddressValue();
     window.avatar.onRemoveFileChooser();
     window.map.closePopUp();
+    onHouseTypePrice();
   };
 
-  var onRoomNumber = function (evt) {
-    var value = evt.target.value;
-    var options = capacity.options;
-    var optionsLength = options.length;
-    var availableOptions = window.constants.COMPLIANCE_OPTIONS[value];
+  var capacitySync = function () {
+    var guests = window.constants.ComplianceOptions[rooms.value];
 
-    for (var i = 0; i < optionsLength; i++) {
-      if (availableOptions.indexOf(options[i].value) !== -1) {
-        options[i].disabled = false;
-        if (options[i].value === value || availableOptions.length === 1) {
-          options[i].selected = true;
-        }
+    Array.from(capacity.options).forEach(function (element) {
+      if (guests.includes(element.value)) {
+        element.disabled = false;
       } else {
-        options[i].disabled = true;
+        element.disabled = true;
       }
+    });
+  };
+
+  capacitySync();
+
+  var checkCapacity = function () {
+    var validityMessage;
+    if (rooms.value !== '100') {
+      validityMessage = (capacity.value !== '0' && capacity.value <= rooms.value) ?
+        '' :
+        'Для выбранного количества комнат укажите количество гостей отличное от "Не для гостей", но не более ' + rooms.value;
+    } else {
+      validityMessage = (capacity.value !== '0') ?
+        'Для выбранного количества комнат возможное количество гостей  - "Не для гостей"' :
+        '';
     }
+
+    capacity.setCustomValidity(validityMessage);
   };
 
   var setFormAddressValue = function () {
-    var currentY = mapPinMain.offsetTop;
-    var currentX = mapPinMain.offsetLeft;
+    var currentY = Math.floor(mapPinMain.offsetTop + window.constants.MAIN_PIN_HEIGHT);
+    var currentX = Math.floor(mapPinMain.offsetLeft + (window.constants.MAIN_PIN_WIDTH / 2));
+
 
     formAddress.value = (currentX + ', ' + currentY);
   };
@@ -84,8 +97,8 @@
   setFormAddressValue();
 
   var onHouseTypePrice = function () {
-    housePrice.min = window.constants.HOUSETYPES_PRICE[houseType.value.toUpperCase()];
-    housePrice.placeholder = window.constants.HOUSETYPES_PRICE[houseType.value.toUpperCase()];
+    housePrice.min = window.constants.HouseTypesPrice[houseType.value.toUpperCase()];
+    housePrice.placeholder = window.constants.HouseTypesPrice[houseType.value.toUpperCase()];
   };
 
   var onSuccess = function (array) {
@@ -119,8 +132,6 @@
     }
   });
 
-  rooms.addEventListener('change', onRoomNumber);
-
   formTimeIn.addEventListener('change', function (evt) {
     formTimeOut.value = evt.target.value;
   });
@@ -134,6 +145,12 @@
   formReset.addEventListener('click', function () {
     resetPage();
   });
+
+  rooms.addEventListener('change', capacitySync);
+
+  rooms.addEventListener('change', checkCapacity);
+
+  capacity.addEventListener('change', checkCapacity);
 
   window.form = {
     setFormAddressValue: setFormAddressValue,

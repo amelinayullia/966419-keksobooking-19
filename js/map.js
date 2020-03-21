@@ -6,11 +6,11 @@
 
   var onEscKeydown = function (evt) {
     if (evt.key === 'Escape') {
-      buttonClosePopup();
+      onClosePopup();
     }
   };
 
-  var buttonClosePopup = function () {
+  var onClosePopup = function () {
     closePopUp();
   };
 
@@ -32,14 +32,14 @@
 
     var popupClose = document.querySelector('.popup__close');
 
-    popupClose.addEventListener('click', buttonClosePopup);
+    popupClose.addEventListener('click', onClosePopup);
   };
 
   var createPin = function (offer) {
     var pin = templatePins.cloneNode(true);
 
     pin.style =
-      'left:' + offer.location.x + 'px; top:' + offer.location.y + 'px;';
+      'left:' + (offer.location.x - window.constants.PIN_WIDTH / 2) + 'px; top:' + (offer.location.y - window.constants.PIN_HEIGHT) + 'px;';
     pin.querySelector('img').src = offer.author.avatar;
     pin.querySelector('img').alt = offer.offer.title;
 

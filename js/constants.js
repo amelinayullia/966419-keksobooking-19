@@ -10,7 +10,9 @@
   var MIN_MAIN_PIN_Y = 130;
   var MAX_MAIN_PIN_Y = 630;
   var MAIN_PIN_WIDTH = 65;
-  var MAIN_PIN_HEIGHT = 87;
+  var MAIN_PIN_HEIGHT = 81;
+  var PIN_WIDTH = 50;
+  var PIN_HEIGHT = 70;
   var PINS_NUMBER = 5;
   var PRICE_MIN = 10000;
   var PRICE_MAX = 50000;
@@ -19,21 +21,21 @@
   var PHOTO_HEIGHT = 70;
 
 
-  var LOCALIZED_OFFER_TYPE = {
+  var LocalizedOfferType = {
     'flat': 'Квартира',
     'bungalo': 'Бунгало',
     'house': 'Дом',
     'palace': 'Дворец',
   };
 
-  var COMPLIANCE_OPTIONS = {
+  var ComplianceOptions = {
     '1': ['1'],
     '2': ['1', '2'],
     '3': ['1', '2', '3'],
     '100': ['0']
   };
 
-  var HOUSETYPES_PRICE = {
+  var HouseTypesPrice = {
     BUNGALO: 0,
     FLAT: 1000,
     HOUSE: 5000,
@@ -42,13 +44,15 @@
 
   window.constants = {
     OFFERS_AMOUNT: OFFERS_AMOUNT,
-    LOCALIZED_OFFER_TYPE: LOCALIZED_OFFER_TYPE,
-    COMPLIANCE_OPTIONS: COMPLIANCE_OPTIONS,
-    HOUSETYPES_PRICE: HOUSETYPES_PRICE,
+    LocalizedOfferType: LocalizedOfferType,
+    ComplianceOptions: ComplianceOptions,
+    HouseTypesPrice: HouseTypesPrice,
     MIN_MAIN_PIN_Y: MIN_MAIN_PIN_Y,
     MAX_MAIN_PIN_Y: MAX_MAIN_PIN_Y,
     MAIN_PIN_WIDTH: MAIN_PIN_WIDTH,
     MAIN_PIN_HEIGHT: MAIN_PIN_HEIGHT,
+    PIN_WIDTH: PIN_WIDTH,
+    PIN_HEIGHT: PIN_HEIGHT,
     URL_LOAD: URL_LOAD,
     TIMEOUT_IN_MS: TIMEOUT_IN_MS,
     URL_UPLOAD: URL_UPLOAD,

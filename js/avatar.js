@@ -8,7 +8,7 @@
   var previewHouse = document.querySelector('.ad-form__photo');
   var previewAvatarSrc = previewAvatar.src;
 
-  var fileChooser = function () {
+  var onFileChooser = function () {
     var file = fileChooserAvatar.files[0];
     var fileName = file.name.toLowerCase();
     var matches = FILE_TYPES.some(function (it) {
@@ -26,7 +26,7 @@
     }
   };
 
-  fileChooserAvatar.addEventListener('change', fileChooser);
+  fileChooserAvatar.addEventListener('change', onFileChooser);
 
   fileChooserHouse.addEventListener('change', function () {
     window.util.removeChilds(previewHouse);
