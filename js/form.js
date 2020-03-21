@@ -55,9 +55,10 @@
     window.avatar.onRemoveFileChooser();
     window.map.closePopUp();
     onHouseTypePrice();
+    onCapacitySync();
   };
 
-  var capacitySync = function () {
+  var onCapacitySync = function () {
     var guests = window.constants.ComplianceOptions[rooms.value];
 
     Array.from(capacity.options).forEach(function (element) {
@@ -69,9 +70,9 @@
     });
   };
 
-  capacitySync();
+  onCapacitySync();
 
-  var checkCapacity = function () {
+  var onCheckCapacity = function () {
     var validityMessage;
     if (rooms.value !== '100') {
       validityMessage = (capacity.value !== '0' && capacity.value <= rooms.value) ?
@@ -146,11 +147,11 @@
     resetPage();
   });
 
-  rooms.addEventListener('change', capacitySync);
+  rooms.addEventListener('change', onCapacitySync);
 
-  rooms.addEventListener('change', checkCapacity);
+  rooms.addEventListener('change', onCheckCapacity);
 
-  capacity.addEventListener('change', checkCapacity);
+  capacity.addEventListener('change', onCheckCapacity);
 
   window.form = {
     setFormAddressValue: setFormAddressValue,
